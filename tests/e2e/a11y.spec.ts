@@ -39,10 +39,29 @@ async function openWithTheme(page: Page, path: string, mode: 'light' | 'dark') {
   await page.evaluate(() => document.fonts.ready)
 }
 
-function analyze(page: Page) {
-  return new AxeBuilder({ page })
+async function expectNoBlockingViolations(page: Page) {
+  const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
     .analyze()
+
+  const blocking = results.violations.filter(
+    (violation) => violation.impact === 'serious' || violation.impact === 'critical',
+  )
+
+  // Il messaggio deve bastare a capire cosa correggere senza rieseguire:
+  // regola, impatto e i selettori dei nodi colpiti.
+  expect(
+    blocking,
+    blocking
+      .map(
+        (violation) =>
+          `[${violation.impact}] ${violation.id}: ${violation.help}\n` +
+          violation.nodes
+            .map((node) => `    ${node.target.join(' ')}\n      ${node.failureSummary ?? ''}`)
+            .join('\n'),
+      )
+      .join('\n'),
+  ).toEqual([])
 }
 
 for (const theme of THEMES) {
@@ -51,26 +70,33 @@ for (const theme of THEMES) {
       page,
     }) => {
       await openWithTheme(page, target.path, theme)
-
-      const results = await analyze(page)
-      const blocking = results.violations.filter(
-        (violation) => violation.impact === 'serious' || violation.impact === 'critical',
-      )
-
-      // Il messaggio deve bastare a capire cosa correggere senza rieseguire:
-      // regola, impatto e i selettori dei nodi colpiti.
-      expect(
-        blocking,
-        blocking
-          .map(
-            (violation) =>
-              `[${violation.impact}] ${violation.id}: ${violation.help}\n` +
-              violation.nodes
-                .map((node) => `    ${node.target.join(' ')}\n      ${node.failureSummary ?? ''}`)
-                .join('\n'),
-          )
-          .join('\n'),
-      ).toEqual([])
+      await expectNoBlockingViolations(page)
     })
   }
 }
+
+/** I quattro test sopra passano sempre da una scelta esplicita, quindi da un
+ *  `data-mode` sulla radice: coprono i blocchi `:root[data-mode='light']` e
+ *  `:root[data-mode='dark']` e mai il ramo `@media (prefers-color-scheme:
+ *  light)`. Ma quel ramo è ciò che vede chi non ha mai toccato il selettore,
+ *  cioè la maggior parte dei visitatori.
+ *
+ *  I sei valori chiari vivono duplicati in due blocchi, e il task che li ha
+ *  corretti li ha modificati a mano in entrambi: oggi coincidono, ma nulla lo
+ *  impone. Se un giorno divergessero, senza questo test il tema chiaro
+ *  predefinito potrebbe tornare sotto soglia con la suite tutta verde. */
+test('nessuna violazione grave di accessibilità: tema chiaro di sistema, senza scelta esplicita', async ({
+  page,
+}) => {
+  // Nessuno `addInitScript`: `localStorage` resta vuoto, lo script inline non
+  // trova `fr.mode` e non scrive nulla sulla radice.
+  await page.emulateMedia({ colorScheme: 'light', reducedMotion: 'reduce' })
+
+  await page.goto('/it/')
+  // L'assenza dell'attributo è il punto: è la prova che il tema in vigore
+  // arriva dalla media query e non da `[data-mode]`.
+  await expect(page.locator('html')).not.toHaveAttribute('data-mode', /.*/)
+  await page.evaluate(() => document.fonts.ready)
+
+  await expectNoBlockingViolations(page)
+})

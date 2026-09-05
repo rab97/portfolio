@@ -19,13 +19,20 @@
    HSL — tinta e saturazione restano quelle approvate, quindi ambra, corallo
    e teal restano riconoscibili come famiglia.
 
-     tema chiaro   --amber   #9c6206 -> #985f06   4.40 -> 4.62 su --panel2
-                   --coral   #c93a20 -> #c5391f   4.47 -> 4.61 su --panel2
-                   --teal    #0b7f72 -> #0b796d   4.27 -> 4.62 su --panel2
-                   --dim     #66727f -> #525b66   4.29 -> 6.03 su --panel2
-                   --faint   #93a0ac -> #5f6d7b   2.46 -> 4.64
+   I rapporti qui sotto sono tutti misurati sullo stesso fondo, `--panel2`:
+   è il caso peggiore dei tre fondi di ogni tema, quindi chi passa lì passa
+   ovunque. Non sono i numeri che stampa axe, che riporta il fondo su cui ha
+   incontrato il nodo: dove i due differiscono la riga lo dice.
+
+     tema chiaro   --amber   #9c6206 -> #985f06   4.40 -> 4.62
+                   --coral   #c93a20 -> #c5391f   4.47 -> 4.61
+                   --teal    #0b7f72 -> #0b796d   4.27 -> 4.62
+                   --dim     #66727f -> #525b66   4.29 -> 6.03
+                   --faint   #93a0ac -> #5f6d7b   2.33 -> 4.64
+                                                  (axe: 2.46 su --ink)
                    --sweep   capo ambra #c9800a -> #a46808
-     tema scuro    --faint   #4e5c6b -> #798b9d   2.55 -> 4.64
+     tema scuro    --faint   #4e5c6b -> #798b9d   2.37 -> 4.64
+                                                  (axe: 2.55 su --panel)
                    --dim     #7c8b9b -> #929fac   4.66 -> 6.02
 
    Due note su quelle righe:

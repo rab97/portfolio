@@ -20,7 +20,6 @@ export const itContent = {
     headline: 'Progetto sistemi che {reggono} e interfacce che li rendono ovvi.',
     sub: 'Sviluppatore **frontend e backend**. Undici anni fra design system consumati da decine di team e API che muovono cataloghi da centinaia di migliaia di prodotti.',
     ctaPrimary: 'Vedi i progetti',
-    ctaSecondary: 'Scarica il CV (PDF)',
     diagramTitle: 'Architettura tipica su cui lavoro',
     diagramBadge: 'live',
     nodes: ['Fornitori', 'PIM', 'API Gateway', 'Storefront'],
@@ -371,7 +370,6 @@ export const itContent = {
       { label: 'Email', value: 'ciao@esempio.dev', href: 'mailto:ciao@esempio.dev', arrow: '→' },
       { label: 'GitHub', value: 'github.com/utente', href: 'https://github.com/utente', arrow: '→' },
       { label: 'LinkedIn', value: 'in/utente', href: 'https://linkedin.com/in/utente', arrow: '→' },
-      { label: 'CV', value: 'curriculum.pdf · 180 KB', href: '/curriculum.pdf', arrow: '↓' },
     ],
   },
   footer: {

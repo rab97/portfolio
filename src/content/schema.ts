@@ -82,7 +82,11 @@ export interface ContactLink {
   label: string
   value: string
   href: string
-  arrow: '→' | '↓'
+  /** Solo `→`: la riga col `↓` era lo scaricamento del CV, tolto insieme al
+   *  pulsante dell'hero (README, "Riattivare il CV"). Resta un campo dei
+   *  contenuti e non una costante nel componente perché è testo visibile, e
+   *  i testi visibili stanno qui. */
+  arrow: '→'
 }
 
 export interface Portfolio {
@@ -109,8 +113,9 @@ export interface Portfolio {
     headline: string
     /** Ammette **forte**. */
     sub: string
+    /** Unica CTA dell'hero: porta alla sezione progetti. La seconda
+     *  ("scarica il CV") è stata tolta — vedi README, "Riattivare il CV". */
     ctaPrimary: string
-    ctaSecondary: string
     diagramTitle: string
     diagramBadge: string
     nodes: string[]

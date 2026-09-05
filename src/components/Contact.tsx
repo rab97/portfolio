@@ -10,9 +10,9 @@ import './Contact.css'
  *  src/components/sections.ts).
  *
  *  Ogni riga di `contact.links` è un'ancora completa (etichetta, valore,
- *  freccia). La freccia (`→` per i profili, `↓` per lo scaricamento del
- *  CV) è puramente decorativa — la stessa informazione (dove porta il
- *  link) è già nel testo — quindi è marcata `aria-hidden`. I link verso
+ *  freccia). La freccia (`→`) è puramente decorativa — la stessa
+ *  informazione (dove porta il link) è già nel testo — quindi è marcata
+ *  `aria-hidden`. I link verso
  *  domini esterni si aprono in una scheda nuova con `rel="noopener
  *  noreferrer"`: `noopener` evita che la pagina aperta possa manipolare
  *  `window.opener`, `noreferrer` in più sopprime l'header Referer.

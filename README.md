@@ -144,6 +144,45 @@ dell'anteprima, quindi va riscritto se cambia il template. Le misure
 dichiarate in `og:image:width` / `og:image:height` (`src/components/Head.tsx`)
 devono restare uguali a quelle dello script.
 
+## Riattivare il CV
+
+Il sito **non** offre il curriculum in PDF. C'erano un pulsante nell'hero
+("scarica il CV") e una riga nei contatti, ma il curriculum reale contiene
+indirizzo di casa, telefono e data di nascita: dati che non devono finire su
+un sito pubblico. Togliere la promessa è più onesto che lasciarla vuota,
+quindi pulsante e riga sono stati rimossi invece di puntare a un file
+inesistente.
+
+Quando esisterà un PDF pubblicabile (una versione senza dati personali
+sensibili), per rimetterli servono tre passaggi:
+
+1. **Il file.** Mettere il PDF in `public/` (es. `public/curriculum.pdf`).
+   Tutto ciò che sta in `public/` è pubblicato così com'è.
+2. **La riga nei contatti.** Aggiungere a `contact.links`, in **entrambi** i
+   file dei contenuti, una voce come:
+
+   ```ts
+   { label: 'CV', value: 'curriculum.pdf', href: `${import.meta.env.BASE_URL}curriculum.pdf`, arrow: '↓' },
+   ```
+
+   `BASE_URL` e non `/curriculum.pdf`: il sito è servito sotto
+   `/<nome-repo>/` e un percorso che parte dalla radice del dominio
+   uscirebbe dal sito (era proprio il bug della versione precedente). Il
+   tipo `ContactLink.arrow` va riaperto a `'→' | '↓'` in
+   `src/content/schema.ts`, dov'è oggi ristretto alla sola freccia dei
+   profili.
+3. **Il pulsante dell'hero.** Rimettere `ctaSecondary` nei due file dei
+   contenuti e in `Portfolio['hero']` (`src/content/schema.ts`), e in
+   `src/components/Hero.tsx` un secondo `MagneticButton` accanto al primo:
+
+   ```tsx
+   <MagneticButton variant="ghost" onClick={...}>{hero.ctaSecondary}</MagneticButton>
+   ```
+
+   La variante `ghost` esiste ancora in `MagneticButton` ed è quella che
+   usava. **Passargli un `onClick`**: senza, è un bottone inerte — è già
+   successo, ed è il motivo per cui `MagneticButton` ha oggi i suoi test.
+
 ## Cambiare il nome del repository
 
 Il sito legge la propria base URL da due variabili d'ambiente, entrambe

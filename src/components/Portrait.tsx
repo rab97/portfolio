@@ -23,13 +23,15 @@ const GRID_Y = [80, 160, 240, 320, 400, 480, 520]
  *  `role="img"` + `aria-label` stanno sull'`<svg>` stesso (non su un
  *  elemento muto), e il disegno interno è `aria-hidden`.
  *
- *  Quando arriverà la foto vera, il corpo di questa funzione va sostituito
- *  con:
+ *  Quando arriverà la foto vera, i file vanno in `public/` e il corpo di
+ *  questa funzione va sostituito con:
+ *    const base = import.meta.env.BASE_URL
+ *    ...
  *    <picture>
- *      <source type="image/avif" srcSet="/portrait.avif" />
- *      <source type="image/webp" srcSet="/portrait.webp" />
+ *      <source type="image/avif" srcSet={`${base}portrait.avif`} />
+ *      <source type="image/webp" srcSet={`${base}portrait.webp`} />
  *      <img
- *        src="/portrait.jpg"
+ *        src={`${base}portrait.jpg`}
  *        width={480}
  *        height={600}
  *        loading="lazy"
@@ -37,6 +39,13 @@ const GRID_Y = [80, 160, 240, 320, 400, 480, 520]
  *        alt={alt}
  *      />
  *    </picture>
+ *  `BASE_URL` e non `/portrait.jpg`: il sito è pubblicato sotto
+ *  `/<nome-repo>/` (vedi README, "Cambiare il nome del repository"), e un
+ *  percorso che parte dalla radice del dominio uscirebbe dal sito — in
+ *  locale funzionerebbe e in produzione sarebbe un'immagine rotta.
+ *  `BASE_URL` finisce già con una barra, quindi il nome del file si
+ *  attacca direttamente.
+ *
  *  La firma del componente («{ alt }» in ingresso, un unico elemento reso)
  *  non cambia: è una sostituzione del corpo, non una riscrittura di chi
  *  chiama `<Portrait />`. Non aggiungere le sorgenti avif/webp prima che

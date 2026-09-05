@@ -20,7 +20,6 @@ export const enContent = {
     headline: 'I build systems that {hold up} and interfaces that make them obvious.',
     sub: '**Frontend and backend** developer. Eleven years between design systems consumed by dozens of teams and APIs moving catalogues of hundreds of thousands of products.',
     ctaPrimary: 'See the work',
-    ctaSecondary: 'Download CV (PDF)',
     diagramTitle: 'A typical architecture I work on',
     diagramBadge: 'live',
     nodes: ['Suppliers', 'PIM', 'API Gateway', 'Storefront'],
@@ -369,7 +368,6 @@ export const enContent = {
       { label: 'Email', value: 'ciao@esempio.dev', href: 'mailto:ciao@esempio.dev', arrow: '→' },
       { label: 'GitHub', value: 'github.com/utente', href: 'https://github.com/utente', arrow: '→' },
       { label: 'LinkedIn', value: 'in/utente', href: 'https://linkedin.com/in/utente', arrow: '→' },
-      { label: 'CV', value: 'curriculum.pdf · 180 KB', href: '/curriculum.pdf', arrow: '↓' },
     ],
   },
   footer: {

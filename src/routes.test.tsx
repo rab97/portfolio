@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { HelmetProvider } from 'react-helmet-async'
 import { routes } from './routes'
+import { homePath } from '@/i18n/routes'
 import { itContent } from '@/content/it'
 import { enContent } from '@/content/en'
 import type { RouteObject } from 'react-router'
@@ -31,11 +32,14 @@ afterEach(() => {
 // qui lo rimontiamo a mano perché le pagine dichiarano il proprio head.
 function renderAt(path: string) {
   const router = createMemoryRouter(routes as RouteObject[], { initialEntries: [path] })
-  return render(
+  const view = render(
     <HelmetProvider>
       <RouterProvider router={router} />
     </HelmetProvider>,
   )
+  // Il router serve ai test del redirect: quello che conta lì è *dove* si
+  // finisce, e il percorso è l'unica risposta che non dipende dai contenuti.
+  return { ...view, router }
 }
 
 test('la home italiana rende il landmark main', async () => {
@@ -150,15 +154,29 @@ test('anche la radice emette hreflang assoluti, come ogni altra pagina', () => {
   expect(link).toContain(`hreflang="x-default" href="${SITE}/en/"`)
 })
 
+/** I due test qui sotto asserivano sul titolo del primo progetto: funzionava
+ *  solo perché il titolo italiano e quello inglese oggi differiscono. La
+ *  prossima sessione riscrive esattamente quei titoli, e se coincidessero
+ *  entrambi i test passerebbero a vuoto — verdi qualunque lingua venisse
+ *  scelta. Il redirect è una questione di percorso, quindi si asserisce sul
+ *  percorso. */
 test('la radice porta alla lingua salvata in localStorage', async () => {
   localStorage.setItem('fr.lang', 'it')
   vi.spyOn(navigator, 'language', 'get').mockReturnValue('en-GB')
-  renderAt('/')
-  expect(await screen.findByText(itContent.work.projects[0].title)).toBeInTheDocument()
+  const { router } = renderAt('/')
+  await waitFor(() => expect(router.state.location.pathname).toBe(homePath('it')))
 })
 
 test('senza scelta salvata la radice segue la lingua del browser', async () => {
   vi.spyOn(navigator, 'language', 'get').mockReturnValue('it-IT')
-  renderAt('/')
-  expect(await screen.findByText(itContent.work.projects[0].title)).toBeInTheDocument()
+  const { router } = renderAt('/')
+  await waitFor(() => expect(router.state.location.pathname).toBe(homePath('it')))
+})
+
+test('la lingua del browser inglese porta alla home inglese', async () => {
+  // Il complemento del test sopra: senza, "porta a /it/" passerebbe anche se
+  // il redirect finisse sempre lì a prescindere dalla preferenza.
+  vi.spyOn(navigator, 'language', 'get').mockReturnValue('en-GB')
+  const { router } = renderAt('/')
+  await waitFor(() => expect(router.state.location.pathname).toBe(homePath('en')))
 })

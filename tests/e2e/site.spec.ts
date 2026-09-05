@@ -30,7 +30,7 @@ test('anche un case study arriva pre-renderizzato', async ({ page }) => {
   // Gli URL assoluti dell'head sono costruiti a build time dalla stessa
   // origine su cui gira questo server: se divergessero, `og:url` punterebbe
   // a una pagina diversa da quella servita.
-  expect(html).toContain('property="og:url" content="http://localhost:4173/it/progetti/design-system"')
+  expect(html).toContain('property="og:url" content="http://localhost:4173/it/progetti/design-system/"')
 })
 
 test('la scelta del tema sopravvive a un ricaricamento', async ({ page }) => {

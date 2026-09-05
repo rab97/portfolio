@@ -107,7 +107,7 @@ test("la pagina di un case study emette l'head che vite-react-ssg raccoglie", ()
   // vite-react-ssg lo normalizza in `hreflang` nel file. Gli attributi HTML
   // non hanno maiuscole significative, quindi si confronta senza.
   const link = helmet.link.toString().toLowerCase()
-  const url = `${SITE}/it/progetti/${project.slug}`
+  const url = `${SITE}/it/progetti/${project.slug}/`
 
   // Il title è il gruppo che extractHelmet legge per primo.
   expect(helmet.title.toString()).toContain(escapeAttr(project.title))
@@ -125,7 +125,7 @@ test("la pagina di un case study emette l'head che vite-react-ssg raccoglie", ()
   // hreflang assoluti e fully-qualified, verso la stessa pagina nell'altra lingua.
   expect(link).toContain(`rel="canonical" href="${url}"`)
   expect(link).toContain(`hreflang="it" href="${url}"`)
-  expect(link).toContain(`hreflang="en" href="${SITE}/en/work/${twin.slug}"`)
+  expect(link).toContain(`hreflang="en" href="${SITE}/en/work/${twin.slug}/"`)
   expect(link).toContain(`hreflang="x-default" href="${SITE}/en/"`)
 })
 

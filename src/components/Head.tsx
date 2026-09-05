@@ -13,8 +13,16 @@ import { homePath, swapLocale } from '@/i18n/routes'
 const SITE_URL = (import.meta.env.VITE_SITE_URL ?? '').replace(/\/$/, '')
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
 
+/** Ogni pagina reale è pre-renderizzata come directory + `index.html`
+ *  (`dirStyle: 'nested'` in vite.config.ts): l'URL che risponde senza un
+ *  redirect è sempre quello con la barra finale. Le rotte di React Router
+ *  (vedi `src/i18n/routes.ts`) restano senza — cambiarle sposterebbe
+ *  l'incoerenza sulla navigazione interna — quindi la barra si aggiunge qui,
+ *  nell'unico punto che compone gli indirizzi assoluti esposti a scraper e
+ *  motori di ricerca. */
 function absolute(path: string): string {
-  return `${SITE_URL}${BASE}${path}`
+  const withTrailingSlash = path.endsWith('/') ? path : `${path}/`
+  return `${SITE_URL}${BASE}${withTrailingSlash}`
 }
 
 interface PageHeadProps {

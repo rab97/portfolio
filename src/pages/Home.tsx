@@ -5,12 +5,13 @@ import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
 import { Skills } from '@/components/Skills'
 import { Work } from '@/components/Work'
+import { Timeline } from '@/components/Timeline'
 import { useLocale } from '@/i18n/LocaleProvider'
 
-/** Guscio della home. Le sezioni ancora mancanti (Path, Contact) arrivano
- *  nei task successivi: qui c'è l'hero, il "chi sono", le competenze e i
- *  progetti — i case study restano raggiungibili da un crawler perché
- *  ogni `ProjectCard` linka il proprio al titolo. */
+/** Guscio della home. La sezione ancora mancante (Contact) arriva nel
+ *  task successivo: qui c'è l'hero, il "chi sono", le competenze, i
+ *  progetti e il percorso — i case study restano raggiungibili da un
+ *  crawler perché ogni `ProjectCard` linka il proprio al titolo. */
 export default function Home() {
   const { copy } = useLocale()
 
@@ -23,6 +24,7 @@ export default function Home() {
         <About />
         <Skills />
         <Work />
+        <Timeline />
       </main>
       <Footer />
     </>

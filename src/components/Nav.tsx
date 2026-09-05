@@ -3,12 +3,8 @@ import { useLocale } from '@/i18n/LocaleProvider'
 import { homePath } from '@/i18n/routes'
 import { LangToggle } from '@/i18n/LangToggle'
 import { ThemeToggle } from '@/theme/ThemeToggle'
+import { SECTION_IDS } from './sections'
 import './Nav.css'
-
-/** Chiavi di `copy.nav`, nell'ordine in cui compaiono nel mockup. Doppiano
- *  anche l'id delle sezioni della home a cui puntano: id stabili e uguali
- *  nelle due lingue, non le etichette tradotte che invece cambiano. */
-const NAV_SECTIONS = ['about', 'skills', 'work', 'path', 'contact'] as const
 
 export function Nav() {
   const { locale, copy } = useLocale()
@@ -28,7 +24,7 @@ export function Nav() {
         </span>
 
         <div className="nav-links">
-          {NAV_SECTIONS.map((section) => (
+          {SECTION_IDS.map((section) => (
             <a key={section} href={`${onHome ? '' : homePath(locale)}#${section}`}>
               {copy.nav[section]}
             </a>

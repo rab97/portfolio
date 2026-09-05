@@ -1,12 +1,26 @@
 import { render, screen } from '@testing-library/react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router'
+import { createMemoryRouter, RouterProvider } from 'react-router'
 import { HelmetProvider } from 'react-helmet-async'
 import { routes } from './routes'
-import RootRedirect from '@/pages/RootRedirect'
 import { itContent } from '@/content/it'
 import { enContent } from '@/content/en'
 import type { RouteObject } from 'react-router'
+import type { FilledContext } from 'react-helmet-async'
+
+/** Deve combaciare con `test.env.VITE_SITE_URL` di vite.config.ts. */
+const SITE = 'https://example.test'
+
+/** Le stesse sostituzioni che react-helmet-async applica ai valori degli
+ *  attributi: senza, il test si romperebbe al primo apostrofo nei contenuti. */
+function escapeAttr(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+}
 
 afterEach(() => {
   localStorage.clear()
@@ -53,20 +67,76 @@ test('una rotta sconosciuta porta alla 404', async () => {
   expect(screen.getByText(enContent.notFound.title)).toBeInTheDocument()
 })
 
+/** Rende una rotta come la rende il pre-rendering: niente DOM, niente effetti,
+ *  e l'head raccolto nel contesto invece che applicato al documento — cioè
+ *  esattamente i gruppi `meta` e `link` che `extractHelmet` di vite-react-ssg
+ *  legge per costruire l'`<head>` del file HTML. */
+function prerender(path: string) {
+  const context = {} as FilledContext
+  const wasClient = HelmetProvider.canUseDOM
+  HelmetProvider.canUseDOM = false
+  try {
+    const router = createMemoryRouter(routes as RouteObject[], { initialEntries: [path] })
+    const html = renderToStaticMarkup(
+      <HelmetProvider context={context}>
+        <RouterProvider router={router} />
+      </HelmetProvider>,
+    )
+    return { html, helmet: context.helmet }
+  } finally {
+    HelmetProvider.canUseDOM = wasClient
+  }
+}
+
 test('la radice rende i link alle due lingue anche senza JavaScript', () => {
-  // renderToStaticMarkup non esegue gli effetti: è esattamente quello che vede
-  // uno scraper social, che JavaScript non lo esegue.
-  const html = renderToStaticMarkup(
-    <HelmetProvider>
-      <MemoryRouter initialEntries={['/']}>
-        <RootRedirect />
-      </MemoryRouter>
-    </HelmetProvider>,
-  )
+  // renderToStaticMarkup non esegue gli effetti: è quello che vede uno scraper
+  // social, che JavaScript non lo esegue.
+  const { html } = prerender('/')
   expect(html).toContain('href="/it/"')
   expect(html).toContain('href="/en/"')
   expect(html).toContain(itContent.meta.languageName)
   expect(html).toContain(enContent.meta.languageName)
+})
+
+test("la pagina di un case study emette l'head che vite-react-ssg raccoglie", () => {
+  const project = itContent.work.projects[0]
+  const twin = enContent.work.projects[0]
+  const { helmet } = prerender(`/it/progetti/${project.slug}`)
+  const meta = helmet.meta.toString()
+  // Helmet tiene il nome della prop React (`hrefLang`); il serializzatore di
+  // vite-react-ssg lo normalizza in `hreflang` nel file. Gli attributi HTML
+  // non hanno maiuscole significative, quindi si confronta senza.
+  const link = helmet.link.toString().toLowerCase()
+  const url = `${SITE}/it/progetti/${project.slug}`
+
+  // Il title è il gruppo che extractHelmet legge per primo.
+  expect(helmet.title.toString()).toContain(escapeAttr(project.title))
+  expect(helmet.htmlAttributes.toString()).toContain('lang="it"')
+
+  // I tag da cui dipende l'anteprima social. Con `prioritizeSeoTags` finirebbero
+  // in `helmet.priority`, che vite-react-ssg non legge: qui sparirebbero.
+  expect(meta).toContain(`name="description" content="${escapeAttr(project.summary)}"`)
+  expect(meta).toContain('property="og:type" content="website"')
+  expect(meta).toContain(`property="og:title" content="${escapeAttr(project.title)}"`)
+  expect(meta).toContain(`property="og:description" content="${escapeAttr(project.summary)}"`)
+  expect(meta).toContain(`property="og:url" content="${url}"`)
+  expect(meta).toContain('property="og:locale" content="it_IT"')
+
+  // hreflang assoluti e fully-qualified, verso la stessa pagina nell'altra lingua.
+  expect(link).toContain(`rel="canonical" href="${url}"`)
+  expect(link).toContain(`hreflang="it" href="${url}"`)
+  expect(link).toContain(`hreflang="en" href="${SITE}/en/work/${twin.slug}"`)
+  expect(link).toContain(`hreflang="x-default" href="${SITE}/en/"`)
+})
+
+test('anche la radice emette hreflang assoluti, come ogni altra pagina', () => {
+  const { helmet } = prerender('/')
+  const link = helmet.link.toString().toLowerCase()
+
+  expect(link).toContain(`rel="canonical" href="${SITE}/"`)
+  expect(link).toContain(`hreflang="it" href="${SITE}/it/"`)
+  expect(link).toContain(`hreflang="en" href="${SITE}/en/"`)
+  expect(link).toContain(`hreflang="x-default" href="${SITE}/en/"`)
 })
 
 test('la radice porta alla lingua salvata in localStorage', async () => {

@@ -13,7 +13,17 @@ import RootRedirect from '@/pages/RootRedirect'
 const SLUGS = itContent.work.projects.map((project) => project.slug)
 
 export const routes: RouteRecord[] = [
-  { path: '/', element: <RootRedirect /> },
+  {
+    // La radice non ha una lingua propria, ma il documento deve dichiararne
+    // una e l'head passa dallo stesso `PageHead` di tutte le altre pagine:
+    // `en` è coerente con l'`hreflang="x-default"` che punta a `/en/`.
+    path: '/',
+    element: (
+      <LocaleProvider locale="en">
+        <RootRedirect />
+      </LocaleProvider>
+    ),
+  },
   ...LOCALES.flatMap((locale): RouteRecord[] => [
     {
       path: homePath(locale),

@@ -4,8 +4,12 @@ import { LOCALES } from '@/content/schema'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { homePath, swapLocale } from '@/i18n/routes'
 
-/** Origine pubblica del sito, per gli URL assoluti che gli scraper social
- *  preferiscono. Se non è configurata restano URL assoluti alla radice. */
+/** Origine pubblica del sito. `og:url` e `hreflang` vanno assoluti e
+ *  fully-qualified: relativi, gli scraper social e Google li ignorano.
+ *
+ *  In build `vite.config.ts` pretende `VITE_SITE_URL` e fallisce senza. Qui
+ *  resta vuota solo sotto test e in dev, dove gli URL diventano relativi alla
+ *  radice del sito — cosa che non raggiunge mai nessuno scraper. */
 const SITE_URL = (import.meta.env.VITE_SITE_URL ?? '').replace(/\/$/, '')
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '')
 

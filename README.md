@@ -55,23 +55,28 @@ npm run lint
 
 ## Dove stanno i contenuti e come si modificano
 
-**Tutti i testi del sito sono segnaposto** e vanno sostituiti prima della
-pubblicazione. Vivono in due file, uno per lingua, con la stessa identica
-struttura (un test automatico, `src/content/content.test.ts`, verifica che
-le due lingue abbiano esattamente le stesse chiavi — se se ne modifica una
-senza l'altra, `npm test` fallisce):
+**I testi del sito sono veri**: i segnaposto inventati sono stati sostituiti
+e l'inventario in testa ai due file dei contenuti lo registra. Vivono in due
+file, uno per lingua, con la stessa identica struttura (un test automatico,
+`src/content/content.test.ts`, verifica che le due lingue abbiano
+esattamente le stesse chiavi — se se ne modifica una senza l'altra, `npm
+test` fallisce):
 
 - `src/content/it.ts` — contenuti italiani
 - `src/content/en.ts` — contenuti inglesi
 
-**In testa a ciascuno dei due file c'è l'inventario dei campi inventati**:
-l'elenco esatto dei contenuti che *si leggono come definitivi* pur non
-essendolo — il ruolo accanto al nome, la descrizione per i motori di
-ricerca, il testo alternativo del ritratto e dell'immagine di anteprima, la
-disponibilità ("disponibile da Q1"), i cinque fatti di "chi sono" e le
-quattro metriche dell'hero. Sono affermazioni verificabili su una persona
-reale che nessuno segnalerebbe come da riscrivere: partire da quell'elenco
-prima di pubblicare.
+**In testa a ciascuno dei due file c'è l'inventario dei segnaposto**, che
+oggi dice che non ne resta nessuno *testuale*. Ne resta uno grafico: la foto
+del ritratto non esiste e `src/components/Portrait.tsx` disegna le iniziali
+su una griglia — `meta.portraitAlt` descrive quel segnaposto invece di una
+foto che non c'è.
+
+La regola che vale per ogni modifica futura di questi file: **ogni
+affermazione dev'essere vera e sostenibile**. Niente numeri che non siano
+verificabili pubblicamente, niente nomi di clienti dei prodotti aziendali,
+niente architetture interne. Dove non c'è un fatto vero, il blocco di design
+resta più corto: l'hero ha tre metriche invece di quattro, i tre prodotti
+privati hanno `metrics: []`, e i loro case study hanno poche sezioni corte.
 
 La forma di questi file (quali campi esistono, quali sono obbligatori) è
 definita in `src/content/schema.ts`. Coprono: intestazione ed elevator pitch
@@ -140,9 +145,8 @@ npm run og:image     # riscrive public/og.png, poi va committata
   ruolo presi da `src/content/it.ts` (`meta.title`, spezzato sul trattino
   lungo) e cattura il PNG.
 
-**Va rigenerata quando cambiano `meta.title` o `hero.prompt`**, cioè alla
-prima sessione che sostituisce i segnaposto: il PNG committato non si
-aggiorna da solo. Lo script si ferma con un errore se quei due campi non
+**Va rigenerata quando cambiano `meta.title` o `hero.prompt`**: il PNG
+committato non si aggiorna da solo. Lo script si ferma con un errore se quei due campi non
 coincidono più fra italiano e inglese (l'immagine è una sola per entrambe le
 lingue) o se IBM Plex Mono non si carica, invece di consegnare in silenzio
 un'immagine col ripiego di sistema.

@@ -4,50 +4,47 @@ import { OpenSource } from './OpenSource'
 import { itContent } from '@/content/it'
 import type { Repo } from '@/content/schema'
 
-const repos: Repo[] = [
-  {
-    name: 'design-token-forge',
-    description: 'Style Dictionary pipeline for tokens.',
-    url: 'https://github.com/rab97/design-token-forge',
-    stars: 128,
-    language: 'TypeScript',
-  },
-  {
-    name: 'catalog-sync-pipeline',
-    description: null,
-    url: 'https://github.com/rab97/catalog-sync-pipeline',
-    stars: 64,
-    language: null,
-  },
-]
+const basil: Repo = {
+  fullName: 'cirulla/basil',
+  url: 'https://github.com/cirulla/basil',
+  language: 'TypeScript',
+  contributors: 7,
+  commits: 779,
+  authorCommits: 131,
+}
 
-test('rende una card per ogni repository, con nome, descrizione, linguaggio e stelle', () => {
+test('rende la card del repository con la descrizione dai contenuti, il linguaggio e il contributo', () => {
   render(
     <LocaleProvider locale="it">
-      <OpenSource repos={repos} />
+      <OpenSource repos={[basil]} />
     </LocaleProvider>,
   )
 
-  for (const repo of repos) {
-    expect(screen.getByText(repo.name)).toBeInTheDocument()
-    if (repo.description) expect(screen.getByText(repo.description)).toBeInTheDocument()
-    if (repo.language) expect(screen.getByText(repo.language)).toBeInTheDocument()
-    expect(screen.getByText(String(repo.stars))).toBeInTheDocument()
-  }
+  expect(screen.getByText(basil.fullName)).toBeInTheDocument()
+  expect(screen.getByText(itContent.openSource.repos[0].description)).toBeInTheDocument()
+  expect(screen.getByText(basil.language!)).toBeInTheDocument()
+  expect(screen.getByText('131 commit su 779')).toBeInTheDocument()
+  expect(screen.getByText('7 collaboratori')).toBeInTheDocument()
 })
 
-test('ogni repository linka a GitHub con rel="noopener"', () => {
+test('rende una sola card, non una griglia da sei', () => {
   render(
     <LocaleProvider locale="it">
-      <OpenSource repos={repos} />
+      <OpenSource repos={[basil]} />
     </LocaleProvider>,
   )
+  expect(screen.getAllByRole('link')).toHaveLength(1)
+})
 
-  for (const repo of repos) {
-    const link = screen.getByRole('link', { name: new RegExp(repo.name) })
-    expect(link).toHaveAttribute('href', repo.url)
-    expect(link.getAttribute('rel')).toMatch(/noopener/)
-  }
+test('il link al repository porta rel="noopener"', () => {
+  render(
+    <LocaleProvider locale="it">
+      <OpenSource repos={[basil]} />
+    </LocaleProvider>,
+  )
+  const link = screen.getByRole('link', { name: basil.fullName })
+  expect(link).toHaveAttribute('href', basil.url)
+  expect(link.getAttribute('rel')).toMatch(/noopener/)
 })
 
 test('con repos vuoto mostra il messaggio di indisponibilità invece di una griglia vuota', () => {
@@ -56,7 +53,15 @@ test('con repos vuoto mostra il messaggio di indisponibilità invece di una grig
       <OpenSource repos={[]} />
     </LocaleProvider>,
   )
-
   expect(screen.getByText(itContent.openSource.unavailable)).toBeInTheDocument()
   expect(screen.queryAllByRole('link')).toHaveLength(0)
+})
+
+test('un repository nei contenuti senza dato corrispondente da GitHub svuota la sezione', () => {
+  render(
+    <LocaleProvider locale="it">
+      <OpenSource repos={[{ ...basil, fullName: 'qualcun-altro/non-corrisponde' }]} />
+    </LocaleProvider>,
+  )
+  expect(screen.getByText(itContent.openSource.unavailable)).toBeInTheDocument()
 })

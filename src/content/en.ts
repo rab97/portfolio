@@ -361,10 +361,18 @@ export const enContent = {
   },
   openSource: {
     mark: 'open source',
-    title: "Code I publish when it's worth publishing",
-    lede: "A handful of repositories, properly maintained: I'd rather have one supported package than ten half-abandoned projects.",
-    stars: 'GitHub stars',
-    unavailable: 'Repositories unavailable right now.',
+    title: "A project I contributed to, not one I own",
+    lede: "I don't have personal repositories worth showing off, so I link a team project I contributed to instead — it says more about how I work inside a structured codebase.",
+    unavailable: 'No repository available right now.',
+    commitStat: '{author} of {total} commits',
+    contributorStat: '{count} contributors',
+    repos: [
+      {
+        fullName: 'cirulla/basil',
+        description:
+          'Basil is a solidarity purchase groups web app built for the Software Engineering II course at Politecnico di Torino (2021) by a seven-person team: an npm-workspaces monorepo with separate frontend and backend, a SonarCloud quality gate, and conventional commits enforced by a git hook. My contribution was mainly on the frontend.',
+      },
+    ],
   },
   contact: {
     mark: 'contact',

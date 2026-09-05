@@ -85,20 +85,44 @@ export interface ContactLink {
   arrow: '→' | '↓'
 }
 
-/** Un repository GitHub selezionato da `scripts/fetch-github.ts` a tempo di
- *  build e serializzato in `src/content/github.json`. Non tradotto: nome e
- *  linguaggio sono dati, non testo d'interfaccia (vedi `OpenSource.tsx`).
+/** Un repository della lista esplicita interrogata a tempo di build da
+ *  `scripts/fetch-github.ts` e serializzato in `src/content/github.json`.
+ *  Non tradotto: nome completo e linguaggio sono dati, non testo
+ *  d'interfaccia (vedi `OpenSource.tsx`). La descrizione NON è qui: viene
+ *  da `Portfolio['openSource']['repos']`, scritta a mano nei contenuti,
+ *  perché il repository non è detto sia di proprietà del committente (può
+ *  essere un progetto a cui ha contribuito) — il campo `description` di
+ *  GitHub potrebbe essere vuoto, o comunque non suo da compilare.
+ *
  *  Vive qui, accanto agli altri tipi di contenuto, e non in
  *  `scripts/fetch-github.ts`, perché quel file usa API Node (`node:fs`,
  *  `process`) che il progetto browser non tipizza: un componente che
  *  importasse `Repo` da lì trascinerebbe l'intero script, non node, nel
  *  programma TypeScript dell'app. */
 export interface Repo {
-  name: string
-  description: string | null
+  /** "proprietario/repo", es. "cirulla/basil". */
+  fullName: string
   url: string
-  stars: number
   language: string | null
+  /** Numero di collaboratori del repository (`GET .../contributors`). */
+  contributors: number
+  /** Somma dei commit di tutti i collaboratori. */
+  commits: number
+  /** Commit dell'autore di questo portfolio (vedi `GITHUB_USERNAME` in
+   *  `scripts/fetch-github.ts`) fra quelli totali. */
+  authorCommits: number
+}
+
+/** Testo scritto a mano per un repository mostrato nella sezione open
+ *  source: la sezione mostra il contributo del committente, non le
+ *  stelle, quindi non basta il dato grezzo di GitHub — serve dire cosa è
+ *  il progetto e che ruolo ci ha avuto. `fullName` fa da chiave per
+ *  abbinare questa scheda al `Repo` corrispondente recuperato a tempo di
+ *  build: identico nelle due lingue, è un identificatore, non testo
+ *  tradotto. */
+export interface OpenSourceRepoCopy {
+  fullName: string
+  description: string
 }
 
 export interface Portfolio {
@@ -132,7 +156,18 @@ export interface Portfolio {
   skills: { mark: string; title: string; lede: string; layers: SkillLayer[] }
   work: { mark: string; title: string; lede: string; projects: Project[] }
   path: { mark: string; title: string; entries: TimelineEntry[] }
-  openSource: { mark: string; title: string; lede: string; stars: string; unavailable: string }
+  openSource: {
+    mark: string
+    title: string
+    lede: string
+    unavailable: string
+    /** Ammette {author} e {total}: commit dell'autore di questo portfolio
+     *  su quelli totali del repository. */
+    commitStat: string
+    /** Ammette {count}: numero di collaboratori del repository. */
+    contributorStat: string
+    repos: OpenSourceRepoCopy[]
+  }
   contact: {
     mark: string
     /** Ammette {evidenziato}. */

@@ -1,44 +1,10 @@
 [
   {
-    "name": "kick-reserve",
-    "description": null,
-    "url": "https://github.com/rab97/kick-reserve",
-    "stars": 0,
-    "language": "TypeScript"
-  },
-  {
-    "name": "react-calculator",
-    "description": null,
-    "url": "https://github.com/rab97/react-calculator",
-    "stars": 0,
-    "language": "JavaScript"
-  },
-  {
-    "name": "ParallelGraphColoring",
-    "description": null,
-    "url": "https://github.com/rab97/ParallelGraphColoring",
-    "stars": 0,
-    "language": "C++"
-  },
-  {
-    "name": "ezshop-group53",
-    "description": null,
-    "url": "https://github.com/rab97/ezshop-group53",
-    "stars": 0,
-    "language": "Java"
-  },
-  {
-    "name": "ezshop",
-    "description": null,
-    "url": "https://github.com/rab97/ezshop",
-    "stars": 0,
-    "language": null
-  },
-  {
-    "name": "polito-SE2-group11",
-    "description": null,
-    "url": "https://github.com/rab97/polito-SE2-group11",
-    "stars": 0,
-    "language": "TypeScript"
+    "fullName": "cirulla/basil",
+    "url": "https://github.com/cirulla/basil",
+    "language": "TypeScript",
+    "contributors": 7,
+    "commits": 779,
+    "authorCommits": 131
   }
 ]

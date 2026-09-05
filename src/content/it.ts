@@ -361,21 +361,6 @@ export const itContent = {
       },
     ],
   },
-  openSource: {
-    mark: 'open source',
-    title: 'Un progetto a cui ho contribuito, non uno che possiedo',
-    lede: 'Non ho repository personali che valga la pena mostrare: linko invece un progetto di squadra a cui ho contribuito, perché dice di più sul modo in cui lavoro dentro una codebase strutturata.',
-    unavailable: 'Nessun repository disponibile al momento.',
-    commitStat: '{author} commit su {total}',
-    contributorStat: '{count} collaboratori',
-    repos: [
-      {
-        fullName: 'cirulla/basil',
-        description:
-          "Basil è l'app di gruppi d'acquisto solidale sviluppata per il corso di Software Engineering II al Politecnico di Torino (2021), da un team di sette persone: monorepo con frontend e backend separati, quality gate SonarCloud e commit convenzionali imposti da un git hook. Il mio contributo è stato principalmente sul frontend.",
-      },
-    ],
-  },
   contact: {
     mark: 'contatti',
     title: 'Se hai un sistema complicato, {parliamone}.',

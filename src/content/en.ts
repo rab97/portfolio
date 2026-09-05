@@ -6,6 +6,8 @@ export const enContent = {
     description:
       'Frontend and backend developer. Design systems, catalogue APIs and e-commerce platforms.',
     portraitAlt: 'Photographic portrait',
+    languageName: 'English',
+    ogLocale: 'en_GB',
   },
   nav: { about: 'about', skills: 'skills', work: 'work', path: 'path', contact: 'contact' },
   availability: 'available from Q1',

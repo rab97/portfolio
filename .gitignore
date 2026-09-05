@@ -25,3 +25,6 @@ dist-ssr
 
 # Repo-specific
 .superpowers/
+
+# vite-react-ssg
+.vite-react-ssg-temp

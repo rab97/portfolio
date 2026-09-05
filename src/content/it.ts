@@ -6,6 +6,8 @@ export const itContent = {
     description:
       'Sviluppatore frontend e backend. Design system, API di catalogo e piattaforme e-commerce.',
     portraitAlt: 'Ritratto fotografico',
+    languageName: 'Italiano',
+    ogLocale: 'it_IT',
   },
   nav: { about: 'chi', skills: 'skill', work: 'progetti', path: 'percorso', contact: 'contatti' },
   availability: 'disponibile da Q1',

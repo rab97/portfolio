@@ -1,0 +1,31 @@
+{
+  "name": "react-router-dom",
+  "version": "8.3.1",
+  "description": "Ponte locale: vite-react-ssg importa ancora da 'react-router-dom', pacchetto che si ferma alla 7. Il progetto usa react-router 8, che espone gli stessi simboli (compresi createStaticHandler, createStaticRouter e StaticRouterProvider). Questo shim li ri-esporta, cosi' esiste una sola istanza di react-router.",
+  "type": "module",
+  "private": true,
+  "main": "./index.mjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.mjs"
+    },
+    "./server": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.mjs"
+    },
+    "./server.js": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "react-router": "^8.0.0"
+  }
+}

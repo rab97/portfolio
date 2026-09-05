@@ -81,7 +81,15 @@ export interface ContactLink {
 }
 
 export interface Portfolio {
-  meta: { title: string; description: string; portraitAlt: string }
+  meta: {
+    title: string
+    description: string
+    portraitAlt: string
+    /** Nome della lingua nella lingua stessa, per i link della pagina radice. */
+    languageName: string
+    /** Valore `og:locale`, es. `it_IT`. */
+    ogLocale: string
+  }
   nav: { about: string; skills: string; work: string; path: string; contact: string }
   availability: string
   themeLabels: { group: string; auto: string; light: string; dark: string }

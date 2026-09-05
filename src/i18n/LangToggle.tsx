@@ -2,16 +2,7 @@ import { useLocation, useNavigate } from 'react-router'
 import type { Locale } from '@/content/schema'
 import { useLocale } from './LocaleProvider'
 import { swapLocale } from './routes'
-
-const STORAGE_KEY = 'fr.lang'
-
-function storeLang(locale: Locale): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, locale)
-  } catch {
-    /* storage bloccato: la scelta vale solo per questa visita */
-  }
-}
+import { storeLocale } from './langStorage'
 
 export function LangToggle() {
   const { locale, copy } = useLocale()
@@ -20,7 +11,7 @@ export function LangToggle() {
 
   const goTo = (target: Locale) => {
     navigate(swapLocale(location.pathname, target))
-    storeLang(target)
+    storeLocale(target)
   }
 
   return (

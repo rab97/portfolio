@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { HelmetProvider } from 'react-helmet-async'
 import { routes } from './routes'
-import { homePath } from '@/i18n/routes'
+import { homePath, notFoundPath } from '@/i18n/routes'
 import { itContent } from '@/content/it'
 import { enContent } from '@/content/en'
 import type { RouteObject } from 'react-router'
@@ -142,6 +142,29 @@ test("la pagina di un case study emette l'head che vite-react-ssg raccoglie", ()
   expect(link).toContain(`hreflang="it" href="${url}"`)
   expect(link).toContain(`hreflang="en" href="${SITE}/en/work/${twin.slug}/"`)
   expect(link).toContain(`hreflang="x-default" href="${SITE}/en/"`)
+})
+
+/** Le due pagine 404 esistono come file e un hosting statico le serve con
+ *  stato 200: senza dirlo, per un motore di ricerca sono pagine normali. Su
+ *  tredici pagine, due risultati intitolati "404 — pagina non trovata". */
+test('la pagina non trovata chiede di non essere indicizzata', () => {
+  const { helmet } = prerender(notFoundPath('it'))
+  const meta = helmet.meta.toString()
+  const link = helmet.link.toString().toLowerCase()
+
+  expect(meta).toContain('name="robots" content="noindex, follow"')
+  // Un canonico a sé stessa direbbe il contrario del noindex, e un hreflang
+  // collegherebbe fra loro due pagine che nessuno deve trovare.
+  expect(link).not.toContain('rel="canonical"')
+  expect(link).not.toContain('hreflang')
+})
+
+test('le pagine vere restano indicizzabili', () => {
+  // Il contrario del test sopra: `noindex` è una scelta per pagina, non un
+  // interruttore che qualcuno può lasciare acceso su tutto il sito.
+  const { helmet } = prerender(homePath('it'))
+  expect(helmet.meta.toString()).not.toContain('name="robots"')
+  expect(helmet.link.toString().toLowerCase()).toContain('rel="canonical"')
 })
 
 test('anche la radice emette hreflang assoluti, come ogni altra pagina', () => {

@@ -43,9 +43,23 @@ const OG_IMAGE_HEIGHT = '630'
 interface PageHeadProps {
   title: string
   description: string
+  /** Pagine che esistono come file ma non sono contenuti: le due 404.
+   *
+   *  Un hosting statico serve `/it/404/` con stato 200 come qualunque altra
+   *  pagina, quindi per un motore di ricerca è una pagina normale — e su un
+   *  sito da tredici pagine due risultati intitolati "404 — pagina non
+   *  trovata" sono il 15% dell'indice. Con `noindex` sparisce dall'indice;
+   *  `follow` perché i link che contiene (il ritorno alla home) restano
+   *  buoni da seguire.
+   *
+   *  Insieme all'indicizzazione saltano anche `canonical` e gli `hreflang`:
+   *  un canonico a sé stessa è la dichiarazione opposta ("questa pagina è
+   *  l'originale, indicizza questa"), e un `hreflang` verso una pagina non
+   *  indicizzata non ha nulla da collegare. */
+  noindex?: boolean
 }
 
-export function PageHead({ title, description }: PageHeadProps) {
+export function PageHead({ title, description, noindex = false }: PageHeadProps) {
   const { locale, copy } = useLocale()
   const { pathname } = useLocation()
   const url = absolute(pathname)
@@ -56,7 +70,8 @@ export function PageHead({ title, description }: PageHeadProps) {
     <Head htmlAttributes={{ lang: locale }}>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
+      {noindex && <meta name="robots" content="noindex, follow" />}
+      {!noindex && <link rel="canonical" href={url} />}
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={copy.meta.title} />
       <meta property="og:title" content={title} />
@@ -74,15 +89,16 @@ export function PageHead({ title, description }: PageHeadProps) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      {LOCALES.map((other) => (
-        <link
-          key={other}
-          rel="alternate"
-          hrefLang={other}
-          href={absolute(swapLocale(pathname, other))}
-        />
-      ))}
-      <link rel="alternate" hrefLang="x-default" href={absolute(homePath('en'))} />
+      {!noindex &&
+        LOCALES.map((other) => (
+          <link
+            key={other}
+            rel="alternate"
+            hrefLang={other}
+            href={absolute(swapLocale(pathname, other))}
+          />
+        ))}
+      {!noindex && <link rel="alternate" hrefLang="x-default" href={absolute(homePath('en'))} />}
     </Head>
   )
 }

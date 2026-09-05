@@ -181,6 +181,22 @@ test('la build emette il 404.html che serve a GitHub Pages', async ({ page }) =>
   expect(html).toMatch(/<script type="module"[^>]*src="\/assets\/[^"]+\.js"/)
 })
 
+/** `/it/404/` e `/en/404/` sono file veri, serviti con stato 200 come ogni
+ *  altra pagina: per un motore di ricerca sono contenuti normali, e su un
+ *  sito da tredici pagine sarebbero due risultati intitolati "404 — pagina
+ *  non trovata". Il `noindex` deve stare nell'HTML servito, non solo nel
+ *  DOM dopo l'idratazione: un crawler legge il primo. */
+test('le pagine 404 pre-renderizzate chiedono di non essere indicizzate', async ({ page }) => {
+  for (const path of ['/it/404/', '/en/404/']) {
+    const response = await page.goto(path)
+    const html = await response!.text()
+
+    expect(response!.status()).toBe(200)
+    expect(html).toContain('name="robots" content="noindex, follow"')
+    expect(html).not.toContain('rel="canonical"')
+  }
+})
+
 test('uno slug inesistente mostra la pagina non trovata', async ({ page }) => {
   await page.goto('/it/progetti/non-esiste')
   await expect(page.getByRole('main')).toContainText(/non trovat/i)

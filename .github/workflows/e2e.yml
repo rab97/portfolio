@@ -1,0 +1,35 @@
+name: End-to-end tests
+
+# Separato dal deploy apposta: richiede il download di un browser Chromium,
+# quindi gira solo sulle pull request e non allunga ogni pubblicazione.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # playwright.config.ts costruisce da sé dist/ e lo serve con `vite
+      # preview`, impostando VITE_SITE_URL sull'origine locale del server:
+      # non serve ripeterlo qui.
+      - name: End-to-end tests
+        run: npm run test:e2e

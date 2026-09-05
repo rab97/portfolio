@@ -1,0 +1,80 @@
+name: Deploy to GitHub Pages
+
+# Si attiva a ogni push sul branch principale e a comando da GitHub. Non gira
+# sulle pull request: quello è compito di e2e.yml, separato apposta perché
+# richiede il download di un browser e allungherebbe ogni pubblicazione.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Solo un deploy alla volta: se un push arriva mentre un altro deploy è in
+# corso, non lo cancella — resta in coda ed entra in scena a build finita.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # `ci`, non `install`: riproducibile dal lockfile, fallisce se
+      # package-lock.json e package.json sono disallineati invece di
+      # aggiornare in silenzio.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      # Entrambe le variabili sono obbligatorie: senza VITE_SITE_URL la build
+      # fallisce apposta (vite.config.ts), senza VITE_BASE gli asset
+      # puntano alla radice del dominio invece che a /<repo>/. I valori di
+      # ripiego coprono il repository e il dominio decisi per questa
+      # pubblicazione; una variabile di repository con lo stesso nome li
+      # sovrascrive senza toccare il workflow (vedi README, sezione "Cambiare
+      # il nome del repository").
+      - name: Build
+        env:
+          VITE_BASE: ${{ vars.VITE_BASE || '/portfolio/' }}
+          VITE_SITE_URL: ${{ vars.VITE_SITE_URL || 'https://rab97.github.io' }}
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # L'intera dist/, 404.html compreso: senza, un indirizzo sbagliato in
+      # produzione mostrerebbe la pagina d'errore di GitHub invece della
+      # pagina non trovata del sito.
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

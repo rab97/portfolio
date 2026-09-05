@@ -90,9 +90,33 @@ test('la radice rispetta la lingua già scelta', async ({ page }) => {
   await expect(page).toHaveURL(/\/it\/$/)
 })
 
+/** I due test qui sotto navigano su percorsi che in `dist` non hanno nessun
+ *  file. Che rendano la pagina non trovata dipende da chi risponde a un URL
+ *  senza file: `vite preview` cade sul fallback SPA, GitHub Pages serve
+ *  `404.html` dalla radice. I due comportamenti coincidono solo se quel file
+ *  esiste — altrimenti in produzione l'utente vedrebbe la pagina d'errore di
+ *  GitHub e questi test descriverebbero qualcosa che non succede.
+ *
+ *  Questo test tiene insieme le due cose: se la build smettesse di emettere
+ *  `404.html`, i due test successivi resterebbero verdi sul preview mentre la
+ *  produzione si romperebbe, e sarebbe questo a segnalarlo. Il contenuto
+ *  atteso è il guscio dell'applicazione, non una pagina pre-renderizzata: è
+ *  l'unica pagina del sito il cui URL non si può conoscere in anticipo. */
+test('la build emette il 404.html che serve a GitHub Pages', async ({ page }) => {
+  const response = await page.goto('/404.html')
+  const html = await response!.text()
+
+  expect(response!.status()).toBe(200)
+  expect(html).toContain('id="root"')
+  // Con lo script dell'app dentro, il router può rendere la rotta chiesta.
+  expect(html).toMatch(/<script type="module"[^>]*src="\/assets\/[^"]+\.js"/)
+})
+
 test('uno slug inesistente mostra la pagina non trovata', async ({ page }) => {
   await page.goto('/it/progetti/non-esiste')
   await expect(page.getByRole('main')).toContainText(/non trovat/i)
+  // Nessun rimbalzo alla home: l'URL chiesto resta quello.
+  await expect(page).toHaveURL(/\/it\/progetti\/non-esiste$/)
 })
 
 test('la pagina 404 inglese risponde in inglese', async ({ page }) => {

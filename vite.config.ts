@@ -2,6 +2,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
+import { copyFile } from 'node:fs/promises'
+import { isAbsolute, join } from 'node:path'
 // Solo per l'augmentation di `UserConfig` che aggiunge `ssgOptions`.
 import type {} from 'vite-react-ssg'
 
@@ -41,6 +43,33 @@ function hoistCharset(html: string): string {
   )
 }
 
+/** Il pre-rendering copre le rotte che esistono. Quelle che non esistono —
+ *  uno slug sbagliato, un vecchio link, un refuso — non hanno un file, e su
+ *  un hosting statico un URL senza file è la fine del discorso: GitHub Pages
+ *  risponde con la propria pagina d'errore, non con la nostra, e il router
+ *  non entra mai in gioco perché nessun JavaScript del sito viene caricato.
+ *
+ *  `404.html` alla radice è la convenzione con cui GitHub Pages lascia
+ *  rispondere l'applicazione: lo serve per qualunque percorso che non trova.
+ *  Copiandoci il guscio della radice, un URL sconosciuto carica comunque
+ *  l'app, e il router rende la pagina non trovata nella lingua del percorso
+ *  chiesto (`/it/...` sta dentro le rotte italiane).
+ *
+ *  Il markup pre-renderizzato dentro quel file è quello della radice, quindi
+ *  React trova un disallineamento in idratazione e ricostruisce lato client.
+ *  Su una pagina d'errore è un prezzo accettabile: è l'unica pagina del sito
+ *  di cui non si può conoscere l'URL in anticipo, quindi l'unica che non si
+ *  può pre-renderizzare. Tutte le altre restano statiche.
+ *
+ *  Va fatto qui e non copiando un file a mano in un workflow: il guscio
+ *  cambia a ogni build (gli hash degli asset ci sono dentro), e una copia
+ *  fatta altrove si stantisce senza dirlo. */
+async function emitNotFoundShell(outDir: string): Promise<void> {
+  const root = fileURLToPath(new URL('./', import.meta.url))
+  const dir = isAbsolute(outDir) ? outDir : join(root, outDir)
+  await copyFile(join(dir, 'index.html'), join(dir, '404.html'))
+}
+
 export default defineConfig(({ command }) => {
   // Vite espone già `VITE_SITE_URL` dall'ambiente: qui si pretende solo che
   // ci sia, prima che parta qualunque lavoro.
@@ -59,6 +88,8 @@ export default defineConfig(({ command }) => {
       // Le pagine dinamiche arrivano dai getStaticPaths delle rotte.
       includeAllRoutes: false,
       onPageRendered: (_route, html) => hoistCharset(html),
+      // Ultimo passo della build, quando `dist/index.html` esiste già.
+      onFinished: (dir) => emitNotFoundShell(dir),
     },
     test: {
       // Solo i test unitari: `tests/e2e` è di Playwright, che ha un runner

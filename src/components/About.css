@@ -45,7 +45,10 @@
   background: var(--panel);
   line-height: 0;
 }
-.about-portrait img {
+/* `svg` è il segnaposto in linea di oggi (vedi Portrait.tsx); `img` è la
+   foto vera di domani, dentro il <picture> che la sostituirà. */
+.about-portrait img,
+.about-portrait svg {
   display: block;
   width: 100%;
   height: auto;

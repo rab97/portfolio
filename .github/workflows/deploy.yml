@@ -2,7 +2,9 @@ name: Deploy to GitHub Pages
 
 # Si attiva a ogni push sul branch principale e a comando da GitHub. Non gira
 # sulle pull request: quello è compito di e2e.yml, separato apposta perché
-# richiede il download di un browser e allungherebbe ogni pubblicazione.
+# richiede il download di un browser e allungherebbe ogni pubblicazione. Su un
+# push del branch principale i due workflow partono insieme: gli end-to-end
+# girano comunque, in parallelo, senza bloccare la pubblicazione.
 on:
   push:
     branches: [main]
@@ -41,12 +43,19 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
+      # Girava solo in locale, cioè solo se qualcuno si ricordava di
+      # lanciarlo: su un portfolio personale i push arrivano dritti sul
+      # branch principale e non c'è una pull request a farlo per noi.
+      - name: Lint
+        run: npm run lint
+
       - name: Unit tests
         run: npm test
 
-      # Entrambe le variabili sono obbligatorie: senza VITE_SITE_URL la build
-      # fallisce apposta (vite.config.ts), senza VITE_BASE gli asset
-      # puntano alla radice del dominio invece che a /<repo>/. I valori di
+      # Entrambe le variabili sono obbligatorie e la build si ferma se una
+      # manca (build/config.ts): senza VITE_SITE_URL i metadati sarebbero
+      # relativi, senza VITE_BASE gli asset punterebbero alla radice del
+      # dominio invece che a /<repo>/. I valori di
       # ripiego coprono il repository e il dominio decisi per questa
       # pubblicazione; una variabile di repository con lo stesso nome li
       # sovrascrive senza toccare il workflow (vedi README, sezione "Cambiare

@@ -1,8 +1,17 @@
 name: End-to-end tests
 
-# Separato dal deploy apposta: richiede il download di un browser Chromium,
-# quindi gira solo sulle pull request e non allunga ogni pubblicazione.
+# Separato dal deploy apposta: richiede il download di un browser Chromium, e
+# tenerlo qui vuol dire che non allunga né blocca la pubblicazione — questo
+# workflow e quello di deploy partono in parallelo sullo stesso push.
+#
+# Gira anche sui push del branch principale, non solo sulle pull request:
+# questo è un portfolio personale, i push arrivano dritti su `main` e senza
+# questa riga la suite end-to-end — e con lei tutti i controlli di
+# accessibilità, che vivono solo qui perché hanno bisogno di un browser vero —
+# non girerebbe praticamente mai.
 on:
+  push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 

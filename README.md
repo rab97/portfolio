@@ -234,8 +234,13 @@ si ferma, ed è voluto.
 ## Pubblicazione
 
 Il deploy su GitHub Pages è automatico: un push sul branch principale (o
-un avvio manuale da GitHub, scheda Actions) esegue controllo dei tipi, test
-unitari e build, poi pubblica il contenuto di `dist/`. I test end-to-end
-non girano in questo workflow — richiedono il download di un browser e
-allungherebbero ogni pubblicazione — ma girano separatamente
-(`.github/workflows/e2e.yml`) su ogni pull request.
+un avvio manuale da GitHub, scheda Actions) esegue controllo dei tipi, lint,
+test unitari e build, poi pubblica il contenuto di `dist/`.
+
+I test end-to-end (e con loro i controlli di accessibilità, che hanno bisogno
+di un browser vero) non girano in quel workflow — richiedono il download di
+Chromium e allungherebbero ogni pubblicazione — ma girano in
+`.github/workflows/e2e.yml`, che parte **sia sulle pull request sia sui push
+del branch principale**. Sono due workflow paralleli sullo stesso push: gli
+end-to-end girano sempre, e se falliscono non bloccano la pubblicazione ma
+lasciano il segno rosso sul commit.

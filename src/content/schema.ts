@@ -44,6 +44,11 @@ export interface Project {
   /** Etichette di testo che compaiono dentro lo schema SVG, nell'ordine in cui il
    *  componente le consuma. Tradotte come tutto il resto. */
   schemaLabels: string[]
+  /** Descrizione accessibile del disegno (finisce in `aria-label` sull'`<svg>`
+   *  dello schema): dice cosa raffigura lo schema, non cosa fa il progetto —
+   *  è per questo che è un campo distinto da `summary`. Presa dall'attributo
+   *  `aria-label` di ogni SVG nel mockup approvato. */
+  schemaDescription: string
   featured: boolean
   kicker: string
   period: string

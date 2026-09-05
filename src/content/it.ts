@@ -109,6 +109,8 @@ export const itContent = {
           '7 TEMI GENERATI A BUILD TIME',
           'un solo pacchetto · nessun fork per cliente',
         ],
+        schemaDescription:
+          'Token primitivi verso token semantici verso componenti, su sette temi',
         featured: true,
         kicker: 'In evidenza',
         period: '2023 — oggi',
@@ -159,6 +161,10 @@ export const itContent = {
         // Ordine nell'SVG dall'alto verso il basso, sinistra verso destra:
         // l'annotazione degli scarti sopra il nodo di normalizzazione,
         // la riga dei quattro nodi della pipeline, poi l'etichetta del sync completo.
+        // Indici 6-7 aggiunti in coda (fix round 1): i conteggi sotto la riga
+        // dei nodi, cablati prima con il separatore delle migliaia sbagliato
+        // in inglese. Aggiunti in fondo apposta per non spostare gli indici
+        // 0-5, già verificati in review.
         schemaLabels: [
           '−520 scarti',
           'FEED CSV',
@@ -166,7 +172,10 @@ export const itContent = {
           'ARRICCHISCI',
           'INDICIZZA',
           'SYNC COMPLETO',
+          '214.000',
+          '213.480',
         ],
+        schemaDescription: "Pipeline di ingestione: dai feed dei fornitori all'indice di ricerca",
         featured: false,
         kicker: 'PIM',
         period: '2021 — 2023',
@@ -222,6 +231,8 @@ export const itContent = {
           'incompatibile',
           '4.812 CONFIGURAZIONI VALIDE',
         ],
+        schemaDescription:
+          'Configuratore di prodotto: grafo di opzioni con vincoli di incompatibilità',
         featured: false,
         kicker: 'Industriale',
         period: '2020 — 2021',
@@ -273,6 +284,7 @@ export const itContent = {
         // etichetta del monolite, poi etichetta dello switch headless, entrambe
         // sulla stessa riga in alto al grafico.
         schemaLabels: ['monolite', 'switch headless'],
+        schemaDescription: 'Latenza p95 prima e dopo la migrazione headless',
         featured: false,
         kicker: 'Storefront',
         period: '2019 — 2020',

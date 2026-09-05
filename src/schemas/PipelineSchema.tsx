@@ -17,9 +17,16 @@ import type { SchemaProps } from './types'
  *    4: quarto nodo della fila            ("INDICIZZA")
  *    5: etichetta della barra in fondo    ("SYNC COMPLETO")
  *
- *  I conteggi (214.000, 213.480...) e il tempo di sync ("3 m 08 s") sono
- *  invarianti fra le due lingue nel mockup approvato (nessun
- *  `data-i`/`data-e`): restano letterali, come le iniziali di `Portrait`. */
+ *  Indici 6 e 7 aggiunti in coda dopo la review (fix round 1): i due
+ *  conteggi sotto la riga dei nodi ("214.000" e "213.480", quest'ultimo
+ *  ripetuto tre volte identico) usano il separatore delle migliaia della
+ *  lingua e non possono restare letterali come si era fatto in un primo
+ *  tempo — in inglese "214.000" si legge come un decimale. Aggiunti in
+ *  fondo all'array, non in mezzo, per non spostare gli indici 0-5.
+ *
+ *  Il tempo di sync ("3 m 08 s") è invece identico nei due file di
+ *  contenuti (vedi `copy.work.projects[1].metrics`) e resta letterale,
+ *  come le iniziali di `Portrait`. */
 export function PipelineSchema({ label, labels }: SchemaProps) {
   return (
     <svg viewBox="0 0 300 130" role="img" aria-label={label}>
@@ -49,10 +56,10 @@ export function PipelineSchema({ label, labels }: SchemaProps) {
         <line x1={224} y1={46} x2={248} y2={46} />
       </g>
       <g fontSize={7} fill="var(--faint)" textAnchor="middle">
-        <text x={30} y={72}>214.000</text>
-        <text x={114} y={72}>213.480</text>
-        <text x={198} y={72}>213.480</text>
-        <text x={272} y={72}>213.480</text>
+        <text x={30} y={72}>{labels[6]}</text>
+        <text x={114} y={72}>{labels[7]}</text>
+        <text x={198} y={72}>{labels[7]}</text>
+        <text x={272} y={72}>{labels[7]}</text>
         <text x={72} y={26} fill="var(--coral)">
           {labels[0]}
         </text>

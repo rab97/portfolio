@@ -109,6 +109,7 @@ export const enContent = {
           '7 THEMES GENERATED AT BUILD TIME',
           'one package · no per-client fork',
         ],
+        schemaDescription: 'Primitive tokens flowing into semantic tokens into components, across seven themes',
         featured: true,
         kicker: 'Featured',
         period: '2023 — today',
@@ -159,6 +160,10 @@ export const enContent = {
         // Order in the SVG top to bottom, left to right:
         // the rejects annotation above the normalize node,
         // the row of four pipeline nodes, then the full-sync label.
+        // Indices 6-7 appended (fix round 1): the counts under the node
+        // row, first hard-coded with the Italian thousands separator.
+        // Appended at the end on purpose so indices 0-5, already verified
+        // in review, don't move.
         schemaLabels: [
           '−520 rejected',
           'CSV FEEDS',
@@ -166,7 +171,10 @@ export const enContent = {
           'ENRICH',
           'INDEX',
           'FULL SYNC',
+          '214,000',
+          '213,480',
         ],
+        schemaDescription: 'Ingestion pipeline: from supplier feeds to the search index',
         featured: false,
         kicker: 'PIM',
         period: '2021 — 2023',
@@ -222,6 +230,7 @@ export const enContent = {
           'incompatible',
           '4,812 VALID CONFIGURATIONS',
         ],
+        schemaDescription: 'Product configurator: option graph with incompatibility constraints',
         featured: false,
         kicker: 'Industrial',
         period: '2020 — 2021',
@@ -273,6 +282,7 @@ export const enContent = {
         // the monolith label, then the headless-switch label, both on the
         // same row at the top of the chart.
         schemaLabels: ['monolith', 'headless switch'],
+        schemaDescription: 'P95 latency before and after the headless migration',
         featured: false,
         kicker: 'Storefront',
         period: '2019 — 2020',

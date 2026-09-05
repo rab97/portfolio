@@ -78,12 +78,13 @@ export function ProjectCard({ project, featured }: ProjectCardProps) {
       </div>
 
       <div className="schema">
-        {/* Il modello dei contenuti (Task 2) non prevede un campo dedicato
-         *  alla descrizione del disegno: `project.summary` è il testo più
-         *  ricco e già tradotto che lo riassume, e resta distinto dalle
+        {/* `project.schemaDescription` dice cosa raffigura il disegno (fix
+         *  round 1: prima riusava `project.summary`, che dice cosa fa il
+         *  progetto — un annuncio duplicato del <p> qui sopra, senza
+         *  informazione sul contenuto grafico). Resta distinta dalle
          *  etichette disegnate dentro lo schema (`project.schemaLabels`,
          *  passate come `labels`) e dal titolo già letto dall'`<h3>`. */}
-        <Schema label={project.summary} labels={project.schemaLabels} />
+        <Schema label={project.schemaDescription} labels={project.schemaLabels} />
       </div>
     </article>
   )

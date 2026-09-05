@@ -1,0 +1,131 @@
+/* ============================================================
+   Token di tema — copiati dal mockup approvato
+   (docs/superpowers/specs/2026-09-04-portfolio-mockup.html).
+   Tutti i colori (CSS e SVG) passano da queste custom properties.
+
+   Nel mockup l'attributo del toggle stava su `body` (per convivere con
+   il `data-theme` dell'ambiente artifact che marcava la radice). Qui
+   quel vincolo non c'è: l'attributo del toggle sta sulla radice e si
+   chiama `data-mode`. I blocchi legati a `[data-theme]` non servono più
+   e restano tre blocchi in tutto.
+   ============================================================ */
+
+/* --- palette scura: default --- */
+:root {
+  --ink: #0d1117;
+  --panel: #141a21;
+  --panel2: #1a2128;
+  --line: #232c36;
+  --line-2: #2e3a45;
+
+  --amber: #f0a72b;
+  --amber-fill: #f0a72b;
+  --coral: #ff5d47;
+  --teal: #5fd0c5;
+
+  --text: #c9d3de;
+  --bright: #f2f6fa;
+  --dim: #7c8b9b;
+  --faint: #4e5c6b;
+
+  --sweep: linear-gradient(96deg, #f0a72b, #ff5d47);
+  --on-sweep: #14100a;
+
+  --orb-a: rgba(240, 167, 43, 0.2);
+  --orb-b: rgba(255, 93, 71, 0.14);
+  --orb-c: rgba(95, 208, 197, 0.1);
+  --schema-bg: radial-gradient(120% 130% at 80% 0%, #19212a 0%, #10161c 60%, #0c1117 100%);
+  --nav-bg: rgba(13, 17, 23, 0.82);
+  --sheen: rgba(240, 167, 43, 0.1);
+  --notes-bg: #0a0e13;
+
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --gutter: clamp(18px, 4vw, 40px);
+
+  /* Costante, non tematica: nel mockup il testo sul .seg button premuto
+     (fondo --amber-fill) resta sempre scuro, in entrambi i temi, perché
+     --amber-fill è sempre un colore saturo chiaro. Non è nella tabella
+     dei token perché non varia fra chiaro e scuro. */
+  --pressed-ink: #14100a;
+}
+
+/* --- palette chiara: preferenza di sistema, quando non c'è una scelta esplicita --- */
+@media (prefers-color-scheme: light) {
+  :root:not([data-mode='dark']) {
+    --ink: #f4f6f7;
+    --panel: #ffffff;
+    --panel2: #edf0f3;
+    --line: #e0e5ea;
+    --line-2: #c8d1d9;
+    --amber: #9c6206;
+    --amber-fill: #e09a1f;
+    --coral: #c93a20;
+    --teal: #0b7f72;
+    --text: #38434f;
+    --bright: #0e141a;
+    --dim: #66727f;
+    --faint: #93a0ac;
+    --sweep: linear-gradient(96deg, #c9800a, #d14428);
+    --on-sweep: #ffffff;
+    --orb-a: rgba(240, 167, 43, 0.28);
+    --orb-b: rgba(255, 93, 71, 0.18);
+    --orb-c: rgba(11, 127, 114, 0.12);
+    --schema-bg: radial-gradient(120% 130% at 80% 0%, #ffffff 0%, #f2f5f8 60%, #e9eef2 100%);
+    --nav-bg: rgba(244, 246, 247, 0.86);
+    --sheen: rgba(224, 154, 31, 0.18);
+    --notes-bg: #eaeef1;
+  }
+}
+
+/* --- scelta esplicita: chiaro --- */
+:root[data-mode='light'] {
+  --ink: #f4f6f7;
+  --panel: #ffffff;
+  --panel2: #edf0f3;
+  --line: #e0e5ea;
+  --line-2: #c8d1d9;
+  --amber: #9c6206;
+  --amber-fill: #e09a1f;
+  --coral: #c93a20;
+  --teal: #0b7f72;
+  --text: #38434f;
+  --bright: #0e141a;
+  --dim: #66727f;
+  --faint: #93a0ac;
+  --sweep: linear-gradient(96deg, #c9800a, #d14428);
+  --on-sweep: #ffffff;
+  --orb-a: rgba(240, 167, 43, 0.28);
+  --orb-b: rgba(255, 93, 71, 0.18);
+  --orb-c: rgba(11, 127, 114, 0.12);
+  --schema-bg: radial-gradient(120% 130% at 80% 0%, #ffffff 0%, #f2f5f8 60%, #e9eef2 100%);
+  --nav-bg: rgba(244, 246, 247, 0.86);
+  --sheen: rgba(224, 154, 31, 0.18);
+  --notes-bg: #eaeef1;
+}
+
+/* --- scelta esplicita: scuro — deve vincere anche quando il sistema è chiaro --- */
+:root[data-mode='dark'] {
+  --ink: #0d1117;
+  --panel: #141a21;
+  --panel2: #1a2128;
+  --line: #232c36;
+  --line-2: #2e3a45;
+  --amber: #f0a72b;
+  --amber-fill: #f0a72b;
+  --coral: #ff5d47;
+  --teal: #5fd0c5;
+  --text: #c9d3de;
+  --bright: #f2f6fa;
+  --dim: #7c8b9b;
+  --faint: #4e5c6b;
+  --sweep: linear-gradient(96deg, #f0a72b, #ff5d47);
+  --on-sweep: #14100a;
+  --orb-a: rgba(240, 167, 43, 0.2);
+  --orb-b: rgba(255, 93, 71, 0.14);
+  --orb-c: rgba(95, 208, 197, 0.1);
+  --schema-bg: radial-gradient(120% 130% at 80% 0%, #19212a 0%, #10161c 60%, #0c1117 100%);
+  --nav-bg: rgba(13, 17, 23, 0.82);
+  --sheen: rgba(240, 167, 43, 0.1);
+  --notes-bg: #0a0e13;
+}

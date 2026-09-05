@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio</title>
+    <script>
+      // Applica il tema salvato prima del primo paint: senza, le pagine
+      // pre-renderizzate mostrerebbero un lampo del tema sbagliato.
+      try {
+        var m = localStorage.getItem('fr.mode')
+        if (m === 'light' || m === 'dark') document.documentElement.setAttribute('data-mode', m)
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    />
   </head>
   <body>
     <div id="root"></div>

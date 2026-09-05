@@ -35,7 +35,9 @@ export default defineConfig(({ command }) => {
       // Solo i test unitari: `tests/e2e` è di Playwright, che ha un runner
       // suo. Senza questo, il pattern di default di Vitest raccoglie anche
       // quei `.spec.ts` e li esegue in jsdom, dove `page` non esiste.
-      include: ['src/**/*.{test,spec}.{ts,tsx}'],
+      // `build/` sta nell'elenco perché anche la logica di build ha i suoi
+      // test unitari, e girano nella stessa esecuzione di `npm test`.
+      include: ['src/**/*.{test,spec}.{ts,tsx}', 'build/**/*.{test,spec}.ts'],
       environment: 'jsdom',
       globals: true,
       setupFiles: ['./vitest.setup.ts'],

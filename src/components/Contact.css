@@ -1,0 +1,83 @@
+/* ============================================================
+   Contatti — copiato dal mockup approvato
+   (docs/superpowers/specs/2026-09-04-portfolio-mockup.html).
+   ============================================================ */
+
+.contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 760px) {
+  .contact {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+.contact h2 {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: clamp(24px, 4.2vw, 37px);
+  letter-spacing: -0.035em;
+  color: var(--bright);
+  margin: 0;
+  line-height: 1.1;
+}
+.contact h2 mark {
+  background: var(--sweep);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.contact-note {
+  color: var(--dim);
+  font-size: 14px;
+  margin: 14px 0 0;
+  max-width: 46ch;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.links a {
+  background: var(--panel);
+  display: grid;
+  grid-template-columns: 78px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  font-family: var(--mono);
+  font-size: 13px;
+  transition:
+    background 0.25s,
+    color 0.25s;
+}
+.links a:hover {
+  background: var(--panel2);
+  color: var(--bright);
+}
+.links a i {
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.links a s {
+  text-decoration: none;
+  color: var(--faint);
+  transition:
+    transform 0.3s,
+    color 0.25s;
+}
+.links a:hover s {
+  color: var(--amber);
+  transform: translateX(3px);
+}

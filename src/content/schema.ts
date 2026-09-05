@@ -85,6 +85,22 @@ export interface ContactLink {
   arrow: '→' | '↓'
 }
 
+/** Un repository GitHub selezionato da `scripts/fetch-github.ts` a tempo di
+ *  build e serializzato in `src/content/github.json`. Non tradotto: nome e
+ *  linguaggio sono dati, non testo d'interfaccia (vedi `OpenSource.tsx`).
+ *  Vive qui, accanto agli altri tipi di contenuto, e non in
+ *  `scripts/fetch-github.ts`, perché quel file usa API Node (`node:fs`,
+ *  `process`) che il progetto browser non tipizza: un componente che
+ *  importasse `Repo` da lì trascinerebbe l'intero script, non node, nel
+ *  programma TypeScript dell'app. */
+export interface Repo {
+  name: string
+  description: string | null
+  url: string
+  stars: number
+  language: string | null
+}
+
 export interface Portfolio {
   meta: {
     title: string

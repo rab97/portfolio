@@ -74,7 +74,7 @@ interface PageHeadProps {
  *  a essere sospesa.
  *
  *  Per rimuoverlo: cancella questa costante e il suo uso qui sotto. */
-const PLACEHOLDER_CONTENT = true
+export const PLACEHOLDER_CONTENT = true
 
 export function PageHead({ title, description, noindex = false }: PageHeadProps) {
   const { locale, copy } = useLocale()

@@ -1,3 +1,4 @@
+import { PLACEHOLDER_CONTENT } from '@/components/Head'
 import { render, screen, waitFor } from '@testing-library/react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createMemoryRouter, RouterProvider } from 'react-router'
@@ -159,11 +160,26 @@ test('la pagina non trovata chiede di non essere indicizzata', () => {
   expect(link).not.toContain('hreflang')
 })
 
-test('le pagine vere restano indicizzabili', () => {
+test('le pagine vere sono indicizzabili quanto dice PLACEHOLDER_CONTENT', () => {
   // Il contrario del test sopra: `noindex` è una scelta per pagina, non un
   // interruttore che qualcuno può lasciare acceso su tutto il sito.
+  //
+  // L'interruttore però esiste: finché i testi sono segnaposto inventati,
+  // `PLACEHOLDER_CONTENT` sospende l'indicizzazione ovunque. Il test non
+  // sparisce per questo — resta agganciato alla costante, così dice sempre la
+  // verità e torna a pretendere l'indicizzazione da solo, nello stesso commit
+  // in cui l'interruttore verrà spento.
   const { helmet } = prerender(homePath('it'))
-  expect(helmet.meta.toString()).not.toContain('name="robots"')
+  const meta = helmet.meta.toString()
+
+  if (PLACEHOLDER_CONTENT) {
+    expect(meta).toContain('name="robots" content="noindex, follow"')
+  } else {
+    expect(meta).not.toContain('name="robots"')
+  }
+
+  // `canonical` resta in entrambi i casi: dichiara qual è l'originale, cosa
+  // vera a prescindere dal fatto che l'originale sia indicizzato adesso.
   expect(helmet.link.toString().toLowerCase()).toContain('rel="canonical"')
 })
 

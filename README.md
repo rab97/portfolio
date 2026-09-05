@@ -108,6 +108,42 @@ Il resto (routing, pre-rendering della pagina, meta tag, link fra le due
 lingue) segue automaticamente dal contenuto: non c'è altro da collegare a
 mano.
 
+## L'immagine di anteprima social (`og:image`)
+
+Quando un link del sito viene incollato su LinkedIn, X, Slack o WhatsApp,
+l'anteprima mostra `public/og.png` — l'unico motivo per cui tutte e tredici
+le pagine sono pre-renderizzate è che quello scraper non esegue JavaScript e
+legge solo i meta tag statici.
+
+L'immagine **non è disegnata a mano e non è rigenerata dalla build**: è
+prodotta a comando dal design del sito stesso, con Chromium (lo stesso
+browser dei test end-to-end).
+
+```bash
+npm run og:image     # riscrive public/og.png, poi va committata
+```
+
+- `scripts/og-image/template.html` — il template della scheda 1200×630.
+  Usa i token di `src/theme/tokens.css` (inlineati al momento della
+  cattura) e IBM Plex Mono, quindi l'anteprima resta la stessa cosa del
+  sito anche se i colori cambiano;
+- `scripts/og-image/generate.mjs` — riempie il template col nome e col
+  ruolo presi da `src/content/it.ts` (`meta.title`, spezzato sul trattino
+  lungo) e cattura il PNG.
+
+**Va rigenerata quando cambiano `meta.title` o `hero.prompt`**, cioè alla
+prima sessione che sostituisce i segnaposto: il PNG committato non si
+aggiorna da solo. Lo script si ferma con un errore se quei due campi non
+coincidono più fra italiano e inglese (l'immagine è una sola per entrambe le
+lingue) o se IBM Plex Mono non si carica, invece di consegnare in silenzio
+un'immagine col ripiego di sistema.
+
+Il testo alternativo dell'immagine è invece tradotto e sta nei contenuti
+(`meta.ogImageAlt`, in entrambe le lingue): descrive il disegno
+dell'anteprima, quindi va riscritto se cambia il template. Le misure
+dichiarate in `og:image:width` / `og:image:height` (`src/components/Head.tsx`)
+devono restare uguali a quelle dello script.
+
 ## Cambiare il nome del repository
 
 Il sito legge la propria base URL da due variabili d'ambiente, entrambe

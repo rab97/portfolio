@@ -6,6 +6,8 @@ export const enContent = {
     description:
       'Frontend and backend developer. Design systems, catalogue APIs and e-commerce platforms.',
     portraitAlt: 'Photographic portrait',
+    ogImageAlt:
+      'Preview card on a dark background: the name Francesco Rabezzano, the role Fullstack Engineer and a row of connected nodes.',
     languageName: 'English',
     ogLocale: 'en_GB',
   },

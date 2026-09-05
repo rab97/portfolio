@@ -90,6 +90,10 @@ export interface Portfolio {
     title: string
     description: string
     portraitAlt: string
+    /** Testo alternativo dell'immagine di anteprima social (`public/og.png`,
+     *  generata da `scripts/og-image/generate.mjs`): descrive quell'immagine,
+     *  non la pagina. Va riscritto se cambia il disegno dell'anteprima. */
+    ogImageAlt: string
     /** Nome della lingua nella lingua stessa, per i link della pagina radice. */
     languageName: string
     /** Valore `og:locale`, es. `it_IT`. */

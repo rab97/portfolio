@@ -1,0 +1,194 @@
+<!doctype html>
+<!--
+  Template dell'immagine di anteprima social (og:image), 1200×630.
+
+  Non è una pagina del sito: è la sola sorgente di `public/og.png`, che
+  `scripts/og-image/generate.mjs` cattura con Chromium. Vale però le stesse
+  regole del sito, ed è il motivo per cui questo file esiste invece di un
+  PNG disegnato altrove:
+
+  - i colori arrivano tutti da `src/theme/tokens.css`, inlineato al posto di
+    `{{tokens}}`. Nessun esadecimale qui dentro, come in ogni altro foglio
+    di stile del progetto;
+  - `data-mode="dark"` sulla radice fissa la palette scura a prescindere
+    dalla preferenza di sistema della macchina che genera l'immagine:
+    l'anteprima non deve cambiare a seconda di chi lancia lo script;
+  - la tipografia è quella del sito (IBM Plex Mono, dal `<link>` come in
+    `index.html`), e il generatore si ferma se il font non si è caricato,
+    invece di consegnare in silenzio un PNG col ripiego di sistema;
+  - i testi arrivano da `src/content/it.ts` e sono sostituiti al posto dei
+    segnaposto `{{...}}`. L'immagine è una sola per tutte e tredici le
+    pagine e per entrambe le lingue, quindi usa solo i pezzi che nelle due
+    lingue coincidono: nome, ruolo e il prompt dell'hero.
+-->
+<html lang="it" data-mode="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+    />
+    <style>
+      {{tokens}}
+    </style>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--ink);
+        color: var(--text);
+        font-family: var(--mono);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 68px 76px;
+      }
+
+      /* Gli stessi aloni dell'hero, dagli stessi token. */
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+      }
+      .orb-a {
+        width: 620px;
+        height: 620px;
+        right: -180px;
+        top: -240px;
+        background: var(--orb-a);
+      }
+      .orb-b {
+        width: 460px;
+        height: 460px;
+        left: -180px;
+        bottom: -220px;
+        background: var(--orb-b);
+      }
+
+      .row {
+        position: relative;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--bright);
+      }
+      .logo em {
+        font-style: normal;
+        color: var(--amber);
+      }
+
+      .prompt {
+        font-size: 22px;
+        color: var(--faint);
+      }
+      .prompt em {
+        font-style: normal;
+        color: var(--dim);
+      }
+
+      .body {
+        position: relative;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 78px;
+        font-weight: 600;
+        line-height: 1.06;
+        letter-spacing: -0.035em;
+        color: var(--bright);
+      }
+
+      .role {
+        margin: 18px 0 0;
+        font-size: 38px;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        color: var(--amber);
+      }
+
+      .rule {
+        position: relative;
+        height: 0;
+        border: 0;
+        border-top: 1px dashed var(--line-2);
+        margin: 0 0 26px;
+      }
+
+      /* La riga di nodi del diagramma dell'hero, ridotta a tre segni: dice
+         "sistemi collegati" senza una parola da tradurre. */
+      .flow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .flow i {
+        display: block;
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line-2);
+        border-radius: 6px;
+        background: var(--panel2);
+      }
+      .flow i.cool {
+        border-color: var(--teal);
+      }
+      .flow i.hot {
+        border-color: var(--amber);
+      }
+      .flow s {
+        display: block;
+        width: 26px;
+        height: 1px;
+        background: var(--line-2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+
+      <div class="row">
+        <span class="logo">fr<em>.</em>dev</span>
+        <span class="prompt">$ <em>{{prompt}}</em></span>
+      </div>
+
+      <div class="body">
+        <h1>{{name}}</h1>
+        <p class="role">{{role}}</p>
+      </div>
+
+      <div>
+        <hr class="rule" />
+        <div class="flow">
+          <i></i>
+          <s></s>
+          <i class="cool"></i>
+          <s></s>
+          <i class="hot"></i>
+          <s></s>
+          <i></i>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -25,6 +25,21 @@ function absolute(path: string): string {
   return `${SITE_URL}${BASE}${withTrailingSlash}`
 }
 
+/** L'immagine di anteprima social, in `public/` e quindi servita sotto la
+ *  base del sito. Assoluta come `canonical` e `og:url`, e per lo stesso
+ *  motivo: uno scraper che legge un `og:image` relativo lo scarta, e resta
+ *  una scheda di solo testo — cioè metà del motivo per cui questo sito è
+ *  pre-renderizzato.
+ *
+ *  Il file è generato da `scripts/og-image/generate.mjs` (`npm run
+ *  og:image`) dal design del sito stesso, e va rifatto quando cambiano il
+ *  nome o il ruolo nei contenuti. Le misure sono dichiarate perché lo
+ *  scraper possa riservare lo spazio dell'anteprima grande prima di aver
+ *  scaricato il PNG, e devono restare uguali a quelle dello script. */
+const OG_IMAGE = `${SITE_URL}${BASE}/og.png`
+const OG_IMAGE_WIDTH = '1200'
+const OG_IMAGE_HEIGHT = '630'
+
 interface PageHeadProps {
   title: string
   description: string
@@ -48,7 +63,15 @@ export function PageHead({ title, description }: PageHeadProps) {
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:locale" content={copy.meta.ogLocale} />
-      <meta name="twitter:card" content="summary" />
+      <meta property="og:image" content={OG_IMAGE} />
+      <meta property="og:image:width" content={OG_IMAGE_WIDTH} />
+      <meta property="og:image:height" content={OG_IMAGE_HEIGHT} />
+      <meta property="og:image:alt" content={copy.meta.ogImageAlt} />
+      {/* `summary_large_image` e non `summary`: con un'immagine 1200×630
+          l'anteprima è la scheda grande, che è quella che il pre-rendering
+          esiste per produrre. Con `summary` la stessa immagine verrebbe
+          ritagliata in un quadratino di fianco al testo. */}
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       {LOCALES.map((other) => (

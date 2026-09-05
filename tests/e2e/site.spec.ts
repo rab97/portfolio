@@ -33,6 +33,29 @@ test('anche un case study arriva pre-renderizzato', async ({ page }) => {
   expect(html).toContain('property="og:url" content="http://localhost:4173/it/progetti/design-system/"')
 })
 
+/** L'head può dichiarare un `og:image` perfetto e l'anteprima restare vuota
+ *  lo stesso, se quell'indirizzo non serve un'immagine. È l'unico metadato
+ *  del sito che punta a un file invece che a una rotta, e l'unico che nessun
+ *  test unitario può verificare fino in fondo: il PNG è committato in
+ *  `public/` e lo rigenera `npm run og:image`, non la build. Qui si chiede
+ *  al server esattamente l'indirizzo che sta nell'HTML. */
+test("l'immagine dichiarata in og:image esiste e viene servita", async ({ page, request }) => {
+  const response = await page.goto('/it/')
+  const html = await response!.text()
+
+  const declared = html.match(/property="og:image" content="([^"]+)"/)
+  expect(declared, 'og:image assente dall’HTML pre-renderizzato').not.toBeNull()
+
+  const image = await request.get(declared![1])
+  expect(image.status()).toBe(200)
+  expect(image.headers()['content-type']).toContain('image/png')
+  expect((await image.body()).byteLength).toBeGreaterThan(0)
+
+  // Con `summary` la stessa immagine finirebbe in un quadratino di fianco al
+  // testo invece che nella scheda grande.
+  expect(html).toContain('name="twitter:card" content="summary_large_image"')
+})
+
 test('la scelta del tema sopravvive a un ricaricamento', async ({ page }) => {
   await page.goto('/it/')
 

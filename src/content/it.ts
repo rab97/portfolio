@@ -6,6 +6,8 @@ export const itContent = {
     description:
       'Sviluppatore frontend e backend. Design system, API di catalogo e piattaforme e-commerce.',
     portraitAlt: 'Ritratto fotografico',
+    ogImageAlt:
+      'Scheda di anteprima su fondo scuro: il nome Francesco Rabezzano, il ruolo Fullstack Engineer e una riga di nodi collegati.',
     languageName: 'Italiano',
     ogLocale: 'it_IT',
   },

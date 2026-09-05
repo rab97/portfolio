@@ -122,6 +122,17 @@ test("la pagina di un case study emette l'head che vite-react-ssg raccoglie", ()
   expect(meta).toContain(`property="og:url" content="${url}"`)
   expect(meta).toContain('property="og:locale" content="it_IT"')
 
+  // Senza immagine l'anteprima è una scheda di solo testo: metà di ciò per
+  // cui esiste il pre-rendering. L'indirizzo è assoluto come canonical e
+  // og:url, per lo stesso motivo (relativo, uno scraper lo scarta).
+  expect(meta).toContain(`property="og:image" content="${SITE}/og.png"`)
+  expect(meta).toContain('property="og:image:width" content="1200"')
+  expect(meta).toContain('property="og:image:height" content="630"')
+  expect(meta).toContain(
+    `property="og:image:alt" content="${escapeAttr(itContent.meta.ogImageAlt)}"`,
+  )
+  expect(meta).toContain('name="twitter:card" content="summary_large_image"')
+
   // hreflang assoluti e fully-qualified, verso la stessa pagina nell'altra lingua.
   expect(link).toContain(`rel="canonical" href="${url}"`)
   expect(link).toContain(`hreflang="it" href="${url}"`)

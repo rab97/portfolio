@@ -46,6 +46,11 @@
   font-style: normal;
   color: var(--amber);
 }
+.tl-what h3 em::before {
+  /* Il punto mediano è tipografia, non contenuto: non cambia fra lingue e
+     qui sparisce dal flusso letto ad alta voce da uno screen reader. */
+  content: '· ';
+}
 .tl-what p {
   margin: 0 0 9px;
   font-size: 13.5px;

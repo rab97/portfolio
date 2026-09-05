@@ -33,7 +33,7 @@ export function ProjectCard({ project, featured }: ProjectCardProps) {
       <div className="card-body">
         <p className="card-kicker">
           <b>{project.kicker}</b>
-          <span>· {project.period}</span>
+          <span>{project.period}</span>
         </p>
         <h3>
           <Link to={caseStudyHref}>{project.title}</Link>

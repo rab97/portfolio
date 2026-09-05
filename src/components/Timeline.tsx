@@ -33,7 +33,7 @@ export function Timeline() {
               <div className="tl-when">{entry.period}</div>
               <div className="tl-what">
                 <h3>
-                  {entry.role} <em>· {entry.org}</em>
+                  {entry.role} <em>{entry.org}</em>
                 </h3>
                 <p>{entry.body}</p>
                 <div className="tags">

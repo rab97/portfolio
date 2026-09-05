@@ -8,6 +8,44 @@
    quel vincolo non c'è: l'attributo del toggle sta sulla radice e si
    chiama `data-mode`. I blocchi legati a `[data-theme]` non servono più
    e restano tre blocchi in tutto.
+
+   SCOSTAMENTI DAL MOCKUP — contrasto (task 15)
+   I valori del mockup erano stati scelti a occhio e mai misurati. Il primo
+   passaggio di axe su un browser vero, su entrambi i temi, ha trovato solo
+   violazioni di `color-contrast`, tutte riconducibili a sei token. Sono
+   corretti qui e non nei componenti: lo stesso token alimenta decine di
+   punti, e spostarlo in un componente sposterebbe il problema al successivo
+   che usa lo stesso colore. Ogni correzione muove solo la luminosità in
+   HSL — tinta e saturazione restano quelle approvate, quindi ambra, corallo
+   e teal restano riconoscibili come famiglia.
+
+     tema chiaro   --amber   #9c6206 -> #985f06   4.40 -> 4.62 su --panel2
+                   --coral   #c93a20 -> #c5391f   4.47 -> 4.61 su --panel2
+                   --teal    #0b7f72 -> #0b796d   4.27 -> 4.62 su --panel2
+                   --dim     #66727f -> #525b66   4.29 -> 6.03 su --panel2
+                   --faint   #93a0ac -> #5f6d7b   2.46 -> 4.64
+                   --sweep   capo ambra #c9800a -> #a46808
+     tema scuro    --faint   #4e5c6b -> #798b9d   2.55 -> 4.64
+                   --dim     #7c8b9b -> #929fac   4.66 -> 6.02
+
+   Due note su quelle righe:
+   - `--dim` non violava nulla in tema scuro, e in tema chiaro violava di
+     poco. È stato spostato più del minimo in entrambi perché `--faint`, per
+     arrivare a 4.5, doveva salire fin quasi addosso a lui: al minimo i due
+     grigi diventavano indistinguibili e in tema chiaro la gerarchia
+     addirittura si invertiva. Sopra il pavimento di AA non c'è spazio per
+     quattro livelli di testo ravvicinati, quindi la distanza fra `--dim` e
+     `--faint` è stata riaperta invece di lasciarla collassare.
+   - `--coral` in tema chiaro non era stato segnalato da axe (a 4.47 stava
+     appena sotto la soglia, ma su queste pagine non capita su `--panel2`).
+     È corretto lo stesso: era una violazione latente, e muoverlo insieme ad
+     ambra e teal tiene i tre accenti allineati.
+   - il capo ambra di `--sweep` in tema chiaro axe non può misurarlo — su un
+     gradiente restituisce "incomplete", non una violazione. Misurato a mano:
+     il bianco di `--on-sweep` sul pulsante pieno stava a 3.19, e lo stesso
+     capo come testo-gradiente stava a 2.95 su `--ink`, sotto anche la
+     soglia 3:1 del testo grande. Ora sono 4.60 e 4.25 — quest'ultimo in
+     linea col capo corallo, che su `--ink` sta a 4.24.
    ============================================================ */
 
 /* --- palette scura: default --- */
@@ -25,8 +63,8 @@
 
   --text: #c9d3de;
   --bright: #f2f6fa;
-  --dim: #7c8b9b;
-  --faint: #4e5c6b;
+  --dim: #929fac;
+  --faint: #798b9d;
 
   --sweep: linear-gradient(96deg, #f0a72b, #ff5d47);
   --on-sweep: #14100a;
@@ -58,15 +96,15 @@
     --panel2: #edf0f3;
     --line: #e0e5ea;
     --line-2: #c8d1d9;
-    --amber: #9c6206;
+    --amber: #985f06;
     --amber-fill: #e09a1f;
-    --coral: #c93a20;
-    --teal: #0b7f72;
+    --coral: #c5391f;
+    --teal: #0b796d;
     --text: #38434f;
     --bright: #0e141a;
-    --dim: #66727f;
-    --faint: #93a0ac;
-    --sweep: linear-gradient(96deg, #c9800a, #d14428);
+    --dim: #525b66;
+    --faint: #5f6d7b;
+    --sweep: linear-gradient(96deg, #a46808, #d14428);
     --on-sweep: #ffffff;
     --orb-a: rgba(240, 167, 43, 0.28);
     --orb-b: rgba(255, 93, 71, 0.18);
@@ -85,15 +123,15 @@
   --panel2: #edf0f3;
   --line: #e0e5ea;
   --line-2: #c8d1d9;
-  --amber: #9c6206;
+  --amber: #985f06;
   --amber-fill: #e09a1f;
-  --coral: #c93a20;
-  --teal: #0b7f72;
+  --coral: #c5391f;
+  --teal: #0b796d;
   --text: #38434f;
   --bright: #0e141a;
-  --dim: #66727f;
-  --faint: #93a0ac;
-  --sweep: linear-gradient(96deg, #c9800a, #d14428);
+  --dim: #525b66;
+  --faint: #5f6d7b;
+  --sweep: linear-gradient(96deg, #a46808, #d14428);
   --on-sweep: #ffffff;
   --orb-a: rgba(240, 167, 43, 0.28);
   --orb-b: rgba(255, 93, 71, 0.18);
@@ -117,8 +155,8 @@
   --teal: #5fd0c5;
   --text: #c9d3de;
   --bright: #f2f6fa;
-  --dim: #7c8b9b;
-  --faint: #4e5c6b;
+  --dim: #929fac;
+  --faint: #798b9d;
   --sweep: linear-gradient(96deg, #f0a72b, #ff5d47);
   --on-sweep: #14100a;
   --orb-a: rgba(240, 167, 43, 0.2);

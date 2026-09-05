@@ -40,7 +40,7 @@ function renderAt(path: string) {
 
 test('la home italiana rende il landmark main', async () => {
   renderAt('/it/')
-  expect(await screen.findByRole('main')).toBeInTheDocument()
+  expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
 })
 
 test('ogni progetto ha una pagina in entrambe le lingue', async () => {

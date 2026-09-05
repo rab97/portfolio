@@ -1,3 +1,37 @@
+/* ============================================================
+   SEGNAPOSTO — inventario dei campi da sostituire
+
+   Tutti i testi di questo file sono segnaposto, ma non si notano allo stesso
+   modo. "ciao@esempio.dev" o "github.com/utente" gridano da soli che vanno
+   cambiati; i campi qui sotto no: sono affermazioni verificabili su una
+   persona reale, scritte in modo da leggersi come definitive. Sono quelli
+   che sopravvivono a una sostituzione fatta a occhio, e restano sul sito
+   pubblico come dati veri che nessuno ha mai verificato.
+
+   Da sostituire, uno per uno, in QUESTO file e nel suo gemello nell'altra
+   lingua (le due lingue hanno le stesse chiavi, e content.test.ts lo
+   verifica):
+
+     meta.title          il ruolo accanto al nome ("Fullstack Engineer")
+     meta.description    la descrizione che finisce nei risultati di ricerca
+     meta.portraitAlt    descrive una foto che ancora non esiste
+                         (src/components/Portrait.tsx rende un segnaposto)
+     meta.ogImageAlt     descrive l'immagine di anteprima social; se cambia
+                         meta.title va rigenerata anche l'immagine stessa
+                         (`npm run og:image`, vedi README)
+     availability        "disponibile da Q1": una data inventata
+     about.facts[]       tutte e cinque le righe (base, ruolo, lato forte,
+                         lingue, stato)
+     hero.metrics[]      tutte e quattro (anni, componenti pubblicati, SKU
+                         gestiti, p95): numeri inventati, presentati come
+                         misure
+
+   Nello stesso genere, meno insidiosi solo perché più lunghi: `hero.sub` e
+   `about.paragraphs` (gli undici anni, le decine di team, i cataloghi da
+   centinaia di migliaia di prodotti), le voci di `path.entries` (periodi,
+   ruoli, aziende) e le `metrics` di ogni progetto in `work.projects`.
+   ============================================================ */
+
 import type { Portfolio } from './schema'
 
 export const itContent = {

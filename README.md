@@ -64,6 +64,15 @@ senza l'altra, `npm test` fallisce):
 - `src/content/it.ts` — contenuti italiani
 - `src/content/en.ts` — contenuti inglesi
 
+**In testa a ciascuno dei due file c'è l'inventario dei campi inventati**:
+l'elenco esatto dei contenuti che *si leggono come definitivi* pur non
+essendolo — il ruolo accanto al nome, la descrizione per i motori di
+ricerca, il testo alternativo del ritratto e dell'immagine di anteprima, la
+disponibilità ("disponibile da Q1"), i cinque fatti di "chi sono" e le
+quattro metriche dell'hero. Sono affermazioni verificabili su una persona
+reale che nessuno segnalerebbe come da riscrivere: partire da quell'elenco
+prima di pubblicare.
+
 La forma di questi file (quali campi esistono, quali sono obbligatori) è
 definita in `src/content/schema.ts`. Coprono: intestazione ed elevator pitch
 (`hero`), presentazione (`about`), competenze (`skills`), i quattro progetti

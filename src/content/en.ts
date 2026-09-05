@@ -238,7 +238,7 @@ export const enContent = {
         ],
         caseStudy: {
           intro:
-            'A rules engine that rejects impossible combinations across six option families in real time, with an instant quote instead of one at the end of configuration.',
+            'A rules engine rejects impossible combinations across six option families in real time, instead of letting them surface after the order is placed. The result is 4,812 valid configurations recognized by the constraint graph, with an instant quote instead of one at the end of configuration.',
           sections: [
             {
               heading: 'The problem',
@@ -289,7 +289,7 @@ export const enContent = {
         ],
         caseStudy: {
           intro:
-            "Leaving a monolith without pausing sales: route-by-route rollout, mirrored traffic, one-minute rollback if something goes wrong.",
+            'A monolith serving both catalogue and checkout together is left behind one route at a time, with mirrored traffic and a rollback switch ready in under a minute. The result is a p95 time-to-first-byte down 78%, without a single minute of measurable downtime throughout the migration.',
           sections: [
             {
               heading: 'The problem',

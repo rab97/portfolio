@@ -238,7 +238,7 @@ export const itContent = {
         ],
         caseStudy: {
           intro:
-            'Un motore di regole che scarta in tempo reale le combinazioni impossibili fra sei famiglie di opzioni, con preventivo immediato invece che a fine configurazione.',
+            'Un motore di regole scarta in tempo reale le combinazioni impossibili fra sei famiglie di opzioni, invece di farle scoprire a ordine già piazzato. Il risultato sono 4.812 configurazioni valide riconosciute dal grafo dei vincoli, con un preventivo immediato invece che a fine configurazione.',
           sections: [
             {
               heading: 'Il problema',
@@ -289,7 +289,7 @@ export const itContent = {
         ],
         caseStudy: {
           intro:
-            'Uscire da un monolite senza fermare le vendite: rollout per rotta, traffico specchiato, rollback in un minuto se qualcosa va storto.',
+            'Un monolite che serviva insieme catalogo e checkout viene lasciato una rotta alla volta, con traffico specchiato e un interruttore di rollback pronto in un minuto. Il risultato è un p95 time-to-first-byte sceso del 78%, senza un solo minuto di downtime misurabile durante tutta la migrazione.',
           sections: [
             {
               heading: 'Il problema',

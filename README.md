@@ -22,8 +22,9 @@ pretende — vedi più sotto.
 
 ## Test
 
-**Unitari** (Vitest + Testing Library), contenuti, componenti e head delle
-pagine:
+**Unitari** (Vitest + Testing Library): contenuti, componenti, head delle
+pagine e la logica di build in `build/` (guardrail delle variabili
+d'ambiente, riposizionamento del charset, emissione di `404.html`):
 
 ```bash
 npm test          # una sola esecuzione
@@ -111,11 +112,15 @@ mano.
 
 Il sito legge la propria base URL da due variabili d'ambiente, entrambe
 obbligatorie in build (`npm run build` fallisce apposta se mancano — è un
-controllo voluto, non un bug):
+controllo voluto, non un bug: sta in `build/config.ts`, ed è coperto da
+`build/config.test.ts`):
 
 - `VITE_BASE` — il percorso da cui il sito è servito. Per un repository
   pubblicato all'indirizzo `https://<utente>.github.io/<nome-repo>/` vale
-  `/<nome-repo>/`.
+  `/<nome-repo>/`. Impostarla *vuota* è ammesso e significa "servito dalla
+  radice" (vedi "Collegare un dominio proprio"): il controllo distingue una
+  variabile assente — una dimenticanza, che senza controllo darebbe una
+  pagina bianca in produzione — da una impostata a vuoto, che è una scelta.
 - `VITE_SITE_URL` — l'origine assoluta del sito (`https://<utente>.github.io`,
   senza percorso), usata per costruire indirizzi canonici, `og:url` e i
   link fra lingue in forma assoluta: senza, scraper social e motori di
@@ -147,7 +152,9 @@ scelto (es. `portfolio.miodominio.it`), poi configurare un record DNS che
 punti a GitHub Pages secondo le [istruzioni ufficiali](https://docs.github.com/it/pages/configuring-a-custom-domain-for-your-github-pages-site).
 Con un dominio proprio il sito è servito dalla radice, quindi anche
 `VITE_BASE` e `VITE_SITE_URL` vanno aggiornati di conseguenza (`VITE_BASE`
-vuota o `/`, `VITE_SITE_URL` sul nuovo dominio).
+vuota o `/`, `VITE_SITE_URL` sul nuovo dominio). "Vuota" significa impostata
+a stringa vuota (`VITE_BASE= npm run build`), non assente: assente la build
+si ferma, ed è voluto.
 
 ## Pubblicazione
 

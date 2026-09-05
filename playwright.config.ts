@@ -13,9 +13,10 @@ import { defineConfig, devices } from '@playwright/test'
  *  canonici che puntano altrove — e un test sul pre-rendering che non guarda
  *  gli stessi URL che serve non verifica granché. Da qui la costante unica.
  *
- *  `VITE_SITE_URL` non ha un valore di ripiego: `vite.config.ts` fa fallire
- *  apposta la build quando manca, quindi va passata esplicitamente
- *  nell'ambiente del `webServer`. */
+ *  Né `VITE_SITE_URL` né `VITE_BASE` hanno un valore di ripiego: la build
+ *  fallisce apposta quando mancano (build/config.ts), quindi vanno passate
+ *  esplicitamente nell'ambiente del `webServer`. `vite preview` serve dalla
+ *  radice della porta, quindi qui la base è `/`. */
 const ORIGIN = 'http://localhost:4173'
 
 export default defineConfig({
@@ -33,7 +34,7 @@ export default defineConfig({
     // `--strictPort`: meglio un errore chiaro che un server silenziosamente su
     // un'altra porta, con tutti i test a sbattere contro `baseURL`.
     command: 'npm run build && npm run preview -- --port 4173 --strictPort',
-    env: { VITE_SITE_URL: ORIGIN },
+    env: { VITE_SITE_URL: ORIGIN, VITE_BASE: '/' },
     url: `${ORIGIN}/it/`,
     reuseExistingServer: !process.env.CI,
     // La build pre-renderizza 13 pagine: il default di 60s è al limite.

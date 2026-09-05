@@ -29,7 +29,7 @@ test('la lingua corrente è premuta', () => {
 test('cliccare EN naviga alla rotta equivalente', async () => {
   setup('/it/progetti/pipeline')
   await userEvent.click(screen.getByRole('button', { name: 'EN' }))
-  expect(screen.getByTestId('path')).toHaveTextContent('/en/work/pipeline')
+  expect(screen.getByTestId('path')).toHaveTextContent('/en/work/pipeline/')
 })
 
 test('la scelta viene salvata', async () => {

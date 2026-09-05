@@ -61,7 +61,7 @@ test('il cambio lingua porta alla rotta equivalente mantenendo la pagina', async
   await page.goto('/it/progetti/design-system/')
 
   await page.getByRole('button', { name: 'EN', exact: true }).click()
-  await expect(page).toHaveURL(/\/en\/work\/design-system$/)
+  await expect(page).toHaveURL(/\/en\/work\/design-system\/$/)
   // Stessa pagina, altra lingua: lo slug è invariato ed è il contenuto
   // inglese a essere reso.
   await expect(page.getByRole('button', { name: 'EN', exact: true })).toHaveAttribute(

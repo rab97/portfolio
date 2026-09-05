@@ -6,8 +6,8 @@ test('i path della home portano la lingua', () => {
 })
 
 test('il segmento dei progetti è tradotto', () => {
-  expect(workPath('it', 'design-system')).toBe('/it/progetti/design-system')
-  expect(workPath('en', 'design-system')).toBe('/en/work/design-system')
+  expect(workPath('it', 'design-system')).toBe('/it/progetti/design-system/')
+  expect(workPath('en', 'design-system')).toBe('/en/work/design-system/')
 })
 
 test('la 404 è per lingua', () => {
@@ -19,8 +19,8 @@ test('swapLocale traduce la home', () => {
 })
 
 test('swapLocale traduce un case study mantenendo lo slug', () => {
-  expect(swapLocale('/it/progetti/pipeline', 'en')).toBe('/en/work/pipeline')
-  expect(swapLocale('/en/work/pipeline', 'it')).toBe('/it/progetti/pipeline')
+  expect(swapLocale('/it/progetti/pipeline', 'en')).toBe('/en/work/pipeline/')
+  expect(swapLocale('/en/work/pipeline', 'it')).toBe('/it/progetti/pipeline/')
 })
 
 test('swapLocale su un path sconosciuto porta alla home della lingua', () => {

@@ -15,7 +15,7 @@ test('il titolo rimanda al case study nella lingua giusta', () => {
   )
   expect(screen.getByRole('link', { name: new RegExp(project.title) })).toHaveAttribute(
     'href',
-    `/it/progetti/${project.slug}`,
+    `/it/progetti/${project.slug}/`,
   )
 })
 

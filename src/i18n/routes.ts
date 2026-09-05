@@ -7,8 +7,15 @@ export function homePath(locale: Locale): string {
   return `/${locale}/`
 }
 
+/** Con la barra finale: è la forma dei file realmente serviti (case study
+ *  pre-renderizzati come directory + `index.html`, `dirStyle: 'nested'` in
+ *  vite.config.ts), quindi anche quella dei link cliccabili — non solo dei
+ *  metadati in Head.tsx, che la barra la eredita da qui tramite `pathname`.
+ *  Il router accetta comunque entrambe le forme in ingresso (`compilePath`
+ *  di react-router tratta la barra finale come opzionale), quindi non
+ *  serve altro per far combaciare le rotte. */
 export function workPath(locale: Locale, slug: string): string {
-  return `/${locale}/${WORK_SEGMENT[locale]}/${slug}`
+  return `/${locale}/${WORK_SEGMENT[locale]}/${slug}/`
 }
 
 export function notFoundPath(locale: Locale): string {

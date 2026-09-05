@@ -56,6 +56,52 @@ test("l'immagine dichiarata in og:image esiste e viene servita", async ({ page, 
   expect(html).toContain('name="twitter:card" content="summary_large_image"')
 })
 
+/** La barra è incollata in cima e copre i primi pixel della finestra: senza
+ *  `scroll-padding-top` (src/theme/base.css) ogni link del menu porterebbe
+ *  l'inizio della sezione *sotto* la barra. È un difetto che nessun test
+ *  unitario può vedere — jsdom non ha layout e non scorre — e che si misura
+ *  solo su un browser vero: si confronta il bordo alto della sezione con il
+ *  bordo basso della barra. Il numero in CSS non è verificato in sé: se la
+ *  barra crescesse, sarebbe questo a dirlo. */
+test('ogni link del menu porta la sezione sotto la barra, non dietro', async ({ page }) => {
+  // Senza moto ridotto lo scorrimento è morbido e la misura arriverebbe a
+  // metà animazione.
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/it/')
+
+  const nav = page.locator('nav.nav')
+  const anchors = page.locator('nav.nav a[href^="#"]')
+  const count = await anchors.count()
+  expect(count).toBeGreaterThan(0)
+
+  for (let i = 0; i < count; i += 1) {
+    const anchor = anchors.nth(i)
+    const id = (await anchor.getAttribute('href'))!.slice(1)
+    await anchor.click()
+
+    const navBox = (await nav.boundingBox())!
+    const sectionBox = (await page.locator(`#${id}`).boundingBox())!
+    expect(sectionBox.y, `la sezione #${id} finisce sotto la barra`).toBeGreaterThanOrEqual(
+      navBox.y + navBox.height,
+    )
+  }
+})
+
+test('la CTA dell’hero porta alla sezione progetti', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/it/')
+
+  const work = page.locator('#work')
+  expect((await work.boundingBox())!.y).toBeGreaterThan(400)
+
+  await page.getByRole('button', { name: 'Vedi i progetti' }).click()
+
+  const navBox = (await page.locator('nav.nav').boundingBox())!
+  const workBox = (await work.boundingBox())!
+  expect(workBox.y).toBeGreaterThanOrEqual(navBox.y + navBox.height)
+  expect(workBox.y).toBeLessThan(200)
+})
+
 test('la scelta del tema sopravvive a un ricaricamento', async ({ page }) => {
   await page.goto('/it/')
 

@@ -8,6 +8,22 @@
   box-sizing: border-box;
 }
 
+/* La navigazione è incollata in cima (`position: sticky` in Nav.css) e copre
+   i primi ~52px della finestra. Senza uno scarto di scorrimento ogni click
+   sui cinque link del menu porterebbe il titolo della sezione *sotto* la
+   barra: la pagina si muove, e quello che si cercava non si vede.
+   `scroll-padding-top` sul contenitore di scorrimento vale per tutti i modi
+   di arrivare a un'ancora — i link del menu, il `scrollIntoView` della CTA
+   dell'hero, il salto al ricaricamento di un URL con `#` — quindi è una
+   regola sola invece di uno `scroll-margin` su ognuna delle cinque sezioni.
+   Il valore è l'altezza della barra più un margine d'aria; un test
+   end-to-end verifica che la sezione atterri davvero sotto la barra, così se
+   la barra crescesse non resterebbe un numero sbagliato in silenzio. */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
 body {
   background: var(--ink);
   color: var(--text);
@@ -149,5 +165,11 @@ h2.sec-title {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+  /* Anche lo scorrimento morbido è moto: chi ha chiesto di ridurlo salta
+     all'ancora invece di essere trasportato. Lo scarto sotto la barra resta:
+     quello non è un'animazione, è dove si atterra. */
+  html {
+    scroll-behavior: auto;
   }
 }

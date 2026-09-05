@@ -19,9 +19,9 @@ test('espone un landmark di navigazione', () => {
   expect(screen.getByRole('navigation')).toBeInTheDocument()
 })
 
-test('mostra lo stato di disponibilità dai contenuti', () => {
+test('mostra la pillola informativa dai contenuti', () => {
   setup(['/it/'])
-  expect(screen.getByText(itContent.availability)).toBeInTheDocument()
+  expect(screen.getByText(itContent.location)).toBeInTheDocument()
 })
 
 test('contiene entrambi i controlli, lingua e tema', () => {
@@ -39,7 +39,7 @@ test('sulla home i link di navigazione sono ancore semplici', () => {
 })
 
 test('su una pagina di case study i link puntano alla home seguita dall ancora', () => {
-  setup(['/it/progetti/design-system'])
+  setup([`/it/progetti/${itContent.work.projects[0].slug}`])
   expect(screen.getByRole('link', { name: itContent.nav.about })).toHaveAttribute(
     'href',
     '/it/#about',

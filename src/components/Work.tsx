@@ -3,9 +3,8 @@ import { SectionMark } from '@/components/SectionMark'
 import { ProjectCard } from '@/components/ProjectCard'
 import { SECTION_IDS } from '@/components/sections'
 
-/** Sezione "progetti selezionati": la card in evidenza (l'unica con
- *  `featured: true`, il design system multi-brand) più una griglia con le
- *  altre tre. L'`id` è `SECTION_IDS[2]` ("work"), non l'etichetta tradotta
+/** Sezione "progetti": la card in evidenza (l'unica con `featured: true`)
+ *  più una griglia con le altre tre. L'`id` è `SECTION_IDS[2]` ("work"), non l'etichetta tradotta
  *  del marcatore — è a quell'id che punta il link "progetti"/"work" del
  *  menu (vedi src/components/sections.ts). */
 export function Work() {

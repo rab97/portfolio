@@ -62,21 +62,14 @@
   border-radius: 999px;
   padding: 3px 10px 3px 8px;
 }
+/* Pallino fermo, non pulsante: la pillola dice dove sta il proprietario del
+   sito, e un pallino che pulsa la farebbe leggere come un indicatore di
+   stato ("disponibile", "online"), che è esattamente ciò che non è. */
 .status i {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: currentColor;
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal) 50%, transparent);
-  }
-  60%,
-  100% {
-    box-shadow: 0 0 0 6px transparent;
-  }
 }
 
 .controls {

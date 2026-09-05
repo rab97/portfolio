@@ -1,13 +1,13 @@
 export type Locale = 'it' | 'en'
 export const LOCALES: readonly Locale[] = ['it', 'en'] as const
 
-export type SchemaId = 'design-system' | 'pipeline' | 'configurator' | 'headless'
+export type SchemaId = 'pipeline' | 'configurator' | 'mcp' | 'monorepo'
 export type SkillLevel = 1 | 2 | 3 | 4 | 5
 export type LayerId = 'interface' | 'services' | 'delivery'
 export type ProjectLinkKind = 'caseStudy' | 'live' | 'repo' | 'private'
 
 export interface Metric {
-  /** Valore finale mostrato, es. "214k". La parte numerica iniziale viene animata. */
+  /** Valore finale mostrato, es. "131". La parte numerica iniziale viene animata. */
   value: string
   label: string
 }
@@ -55,10 +55,17 @@ export interface Project {
   title: string
   summary: string
   tags: string[]
+  /** Può essere vuoto: `ProjectCard` e `CaseStudy` saltano il blocco. Un
+   *  progetto senza numeri veri e verificabili non ne ha, e inventarli per
+   *  riempire il riquadro è esattamente ciò che questo campo non deve fare. */
   metrics: Metric[]
   links: ProjectLink[]
   caseStudy: {
     intro: string
+    /** Quante ne servono, non quante ne stanno: i tre prodotti aziendali
+     *  hanno poco di raccontabile (codice privato, clienti non nominabili)
+     *  e le loro schede sono corte apposta. Una sezione senza contenuto
+     *  vero non esiste, e l'array può anche restare vuoto. */
     sections: CaseStudySection[]
   }
 }
@@ -104,7 +111,10 @@ export interface Portfolio {
     ogLocale: string
   }
   nav: { about: string; skills: string; work: string; path: string; contact: string }
-  availability: string
+  /** Pillola informativa nella barra in alto: dice dove sta, non se è
+   *  disponibile. Era un annuncio di disponibilità ed è stata cambiata
+   *  perché quell'annuncio non era vero. */
+  location: string
   themeLabels: { group: string; auto: string; light: string; dark: string }
   langLabel: string
   hero: {

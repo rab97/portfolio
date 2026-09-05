@@ -8,29 +8,29 @@ test('la home italiana è pre-renderizzata, non costruita dal client', async ({ 
   // vede uno scraper che non esegue JavaScript. Se il contenuto comparisse
   // solo nel DOM, questa asserzione fallirebbe — ed è esattamente il caso che
   // il pre-rendering esiste per evitare.
-  expect(html).toContain('Progetto sistemi che')
-  expect(html).toContain('Undici anni')
+  expect(html).toContain('Dati di prodotto')
+  expect(html).toContain('Da due anni in azienda su un PIM e un CPQ')
 
   // Anche la prova che l'HTML non è il guscio vuoto di una SPA.
   expect(html).not.toContain('<div id="root"></div>')
 })
 
 /** La barra finale non è cosmetica: `ssgOptions.dirStyle: 'nested'` scrive
- *  `it/progetti/design-system/index.html`, e il server statico di `vite
+ *  `it/progetti/coolpim/index.html`, e il server statico di `vite
  *  preview` serve quel file solo all'URL con la barra — senza, cade sul
  *  fallback SPA e restituisce il guscio della radice. Il documento
  *  pre-renderizzato si chiede quindi all'URL con la barra. */
 test('anche un case study arriva pre-renderizzato', async ({ page }) => {
-  const response = await page.goto('/it/progetti/design-system/')
+  const response = await page.goto('/it/progetti/coolpim/')
   const html = await response!.text()
 
   expect(response!.status()).toBe(200)
-  expect(html).toContain('Design system multi-brand')
-  expect(html).toContain('Una sola libreria di componenti per sette brand')
+  expect(html).toContain('Coolpim')
+  expect(html).toContain('raccoglie e organizza le informazioni sui prodotti')
   // Gli URL assoluti dell'head sono costruiti a build time dalla stessa
   // origine su cui gira questo server: se divergessero, `og:url` punterebbe
   // a una pagina diversa da quella servita.
-  expect(html).toContain('property="og:url" content="http://localhost:4173/it/progetti/design-system/"')
+  expect(html).toContain('property="og:url" content="http://localhost:4173/it/progetti/coolpim/"')
 })
 
 /** L'head può dichiarare un `og:image` perfetto e l'anteprima restare vuota
@@ -143,10 +143,10 @@ test('il tema automatico non lascia attributo sulla radice', async ({ page }) =>
 })
 
 test('il cambio lingua porta alla rotta equivalente mantenendo la pagina', async ({ page }) => {
-  await page.goto('/it/progetti/design-system/')
+  await page.goto('/it/progetti/coolpim/')
 
   await page.getByRole('button', { name: 'EN', exact: true }).click()
-  await expect(page).toHaveURL(/\/en\/work\/design-system\/$/)
+  await expect(page).toHaveURL(/\/en\/work\/coolpim\/$/)
   // Stessa pagina, altra lingua: lo slug è invariato ed è il contenuto
   // inglese a essere reso.
   await expect(page.getByRole('button', { name: 'EN', exact: true })).toHaveAttribute(

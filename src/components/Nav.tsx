@@ -18,9 +18,13 @@ export function Nav() {
           fr<em>.</em>dev
         </Link>
 
+        {/* Pillola informativa: dice dove sta, non se è disponibile. Era
+            un annuncio di disponibilità col pallino pulsante, ed è stato
+            tolto perché non stava cercando lavoro — il pallino resta come
+            marcatore fermo, l'animazione è sparita con l'annuncio. */}
         <span className="status">
           <i aria-hidden="true" />
-          <span>{copy.availability}</span>
+          <span>{copy.location}</span>
         </span>
 
         <div className="nav-links">

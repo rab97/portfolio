@@ -6,8 +6,8 @@ test('i path della home portano la lingua', () => {
 })
 
 test('il segmento dei progetti è tradotto', () => {
-  expect(workPath('it', 'design-system')).toBe('/it/progetti/design-system/')
-  expect(workPath('en', 'design-system')).toBe('/en/work/design-system/')
+  expect(workPath('it', 'coolpim')).toBe('/it/progetti/coolpim/')
+  expect(workPath('en', 'coolpim')).toBe('/en/work/coolpim/')
 })
 
 test('la 404 è per lingua', () => {

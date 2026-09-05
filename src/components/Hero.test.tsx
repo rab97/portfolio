@@ -16,7 +16,7 @@ function renderHero() {
 test('il titolo è un h1 e contiene la parola evidenziata', () => {
   renderHero()
   const h1 = screen.getByRole('heading', { level: 1 })
-  expect(h1).toHaveTextContent('Progetto sistemi che reggono')
+  expect(h1).toHaveTextContent('Dati di prodotto, e le interfacce per lavorarci.')
   expect(h1.querySelector('mark')).not.toBeNull()
 })
 
@@ -27,7 +27,7 @@ test('mostra tutte le metriche dei contenuti', () => {
   }
 })
 
-test('mostra i quattro nodi del diagramma e la sola CTA rimasta', () => {
+test('mostra i nodi del diagramma e la sola CTA rimasta', () => {
   renderHero()
   for (const node of itContent.hero.nodes) {
     expect(screen.getByText(node)).toBeInTheDocument()

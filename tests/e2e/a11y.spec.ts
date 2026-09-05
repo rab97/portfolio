@@ -16,7 +16,7 @@ const PAGES = [
   // Barra finale: senza, `vite preview` serve il fallback SPA invece del
   // documento pre-renderizzato — axe misurerebbe una pagina ricostruita dal
   // client dopo un disallineamento di idratazione, non quella vera.
-  { name: 'case study design-system', path: '/it/progetti/design-system/' },
+  { name: 'case study coolpim', path: '/it/progetti/coolpim/' },
 ] as const
 
 /** Si forza il tema da `localStorage` prima del primo paint, non cliccando il

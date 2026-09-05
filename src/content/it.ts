@@ -1,35 +1,28 @@
 /* ============================================================
-   SEGNAPOSTO — inventario dei campi da sostituire
+   SEGNAPOSTO — inventario
 
-   Tutti i testi di questo file sono segnaposto, ma non si notano allo stesso
-   modo. "ciao@esempio.dev" o "github.com/utente" gridano da soli che vanno
-   cambiati; i campi qui sotto no: sono affermazioni verificabili su una
-   persona reale, scritte in modo da leggersi come definitive. Sono quelli
-   che sopravvivono a una sostituzione fatta a occhio, e restano sul sito
-   pubblico come dati veri che nessuno ha mai verificato.
+   Non ne resta nessuno. Ogni affermazione di questo file è verificabile: i
+   fatti sulla persona vengono dal suo CV e dal committente, i numeri di
+   Basil (131 commit su 779, secondo di sette contributori) si leggono su
+   github.com/cirulla/basil in dieci secondi, e i due prodotti aziendali
+   sono descritti per quello che sono senza nominare clienti, architetture
+   interne o cifre di catalogo — vincolo di riservatezza esplicito.
 
-   Da sostituire, uno per uno, in QUESTO file e nel suo gemello nell'altra
-   lingua (le due lingue hanno le stesse chiavi, e content.test.ts lo
-   verifica):
+   Nessun numero è stato inventato per riempire un blocco del design. Dove
+   non c'era un numero vero, il blocco è più corto:
 
-     meta.title          il ruolo accanto al nome ("Fullstack Engineer")
-     meta.description    la descrizione che finisce nei risultati di ricerca
-     meta.portraitAlt    descrive una foto che ancora non esiste
-                         (src/components/Portrait.tsx rende un segnaposto)
-     meta.ogImageAlt     descrive l'immagine di anteprima social; se cambia
-                         meta.title va rigenerata anche l'immagine stessa
-                         (`npm run og:image`, vedi README)
-     availability        "disponibile da Q1": una data inventata
-     about.facts[]       tutte e cinque le righe (base, ruolo, lato forte,
-                         lingue, stato)
-     hero.metrics[]      tutte e quattro (anni, componenti pubblicati, SKU
-                         gestiti, p95): numeri inventati, presentati come
-                         misure
+     hero.metrics       tre voci, non quattro: anno d'ingresso in azienda,
+                        numero di prodotti su cui lavora, commit su Basil
+     work.projects[]    `metrics: []` per i tre prodotti privati, di cui non
+                        si possono pubblicare misure; solo Basil ne ha
+     caseStudy.sections poche e corte per i prodotti aziendali, perché di
+                        loro si può dire poco; più concrete per Basil, che
+                        è pubblico
 
-   Nello stesso genere, meno insidiosi solo perché più lunghi: `hero.sub` e
-   `about.paragraphs` (gli undici anni, le decine di team, i cataloghi da
-   centinaia di migliaia di prodotti), le voci di `path.entries` (periodi,
-   ruoli, aziende) e le `metrics` di ogni progetto in `work.projects`.
+   Resta un segnaposto **grafico**, non testuale: la foto del ritratto non
+   esiste e `src/components/Portrait.tsx` disegna le iniziali su una
+   griglia. `meta.portraitAlt` lo dice, invece di descrivere una foto che
+   non c'è.
    ============================================================ */
 
 import type { Portfolio } from './schema'
@@ -38,327 +31,295 @@ export const itContent = {
   meta: {
     title: 'Francesco Rabezzano — Fullstack Engineer',
     description:
-      'Sviluppatore frontend e backend. Design system, API di catalogo e piattaforme e-commerce.',
-    portraitAlt: 'Ritratto fotografico',
+      'Sviluppatore a Torino: React e TypeScript sul frontend, C# e .NET sul backend. Lavoro su un PIM e su un CPQ.',
+    portraitAlt: 'Segnaposto del ritratto: le iniziali FR su una griglia',
     ogImageAlt:
       'Scheda di anteprima su fondo scuro: il nome Francesco Rabezzano, il ruolo Fullstack Engineer e una riga di nodi collegati.',
     languageName: 'Italiano',
     ogLocale: 'it_IT',
   },
   nav: { about: 'chi', skills: 'skill', work: 'progetti', path: 'percorso', contact: 'contatti' },
-  availability: 'disponibile da Q1',
+  location: 'Torino, Italia',
   themeLabels: { group: 'Tema', auto: 'AUTO', light: 'Tema chiaro', dark: 'Tema scuro' },
   langLabel: 'Lingua',
   hero: {
     prompt: 'whoami --verbose',
-    headline: 'Progetto sistemi che {reggono} e interfacce che li rendono ovvi.',
-    sub: 'Sviluppatore **frontend e backend**. Undici anni fra design system consumati da decine di team e API che muovono cataloghi da centinaia di migliaia di prodotti.',
+    headline: 'Dati di prodotto, e le {interfacce} per lavorarci.',
+    sub: 'Sviluppatore **frontend**, con lavoro **backend** vero: React e TypeScript da una parte, C# e .NET dall’altra. Da due anni in azienda su un PIM e un CPQ; prima, progetti da autonomo.',
     ctaPrimary: 'Vedi i progetti',
-    diagramTitle: 'Architettura tipica su cui lavoro',
-    diagramBadge: 'live',
-    nodes: ['Fornitori', 'PIM', 'API Gateway', 'Storefront'],
+    diagramTitle: 'Il flusso su cui lavoro',
+    diagramBadge: 'semplificato',
+    nodes: ['Dati prodotto', 'PIM', 'Catalogo', 'Canali'],
+    // Tre, non quattro: l'anno d'ingresso in azienda, i prodotti su cui
+    // sviluppa e i commit su Basil sono i soli numeri veri e verificabili
+    // che ci siano. Il quarto riquadro del mockup resta vuoto apposta.
     metrics: [
-      { value: '11', label: 'anni' },
-      { value: '138', label: 'componenti pubblicati' },
-      { value: '214k', label: 'SKU gestiti' },
-      { value: '42 ms', label: 'p95 catalog api' },
+      { value: '2024', label: 'in azienda dal' },
+      { value: '2', label: 'prodotti: PIM e CPQ' },
+      { value: '131', label: 'commit su Basil' },
     ],
   },
   about: {
     mark: 'chi sono',
-    title: 'Sto bene in mezzo allo stack',
+    title: 'Frontend di partenza, backend per necessità',
     paragraphs: [
-      "Ho iniziato dal frontend e ci sono rimasto abbastanza da imparare che **la maggior parte dei problemi di interfaccia nasce a monte**: in un modello dati sbagliato, in un'API che restituisce troppo, in un contratto mai scritto. Così sono sceso dall'altra parte.",
-      'Oggi il lavoro che mi riesce meglio è quello di confine: definire il contratto fra chi produce i dati e chi li mostra, e poi costruire entrambi i lati. **Design system** e **API** sono lo stesso mestiere visto da due angoli — decidere cosa è pubblico, cosa è stabile, e cosa può cambiare senza rompere nessuno.',
-      "Lavoro nell'e-commerce B2B e B2C: cataloghi grandi, molte varianti, molte lingue, molti brand. Un contesto dove le scorciatoie si pagano dopo sei mesi.",
+      'Ho iniziato dal frontend e ci sono rimasto: **React e TypeScript** sono il posto in cui lavoro meglio. Il backend è arrivato dopo, lavorando sugli stessi prodotti dall’altra parte — **C# e .NET** — perché è lì che i dati che l’interfaccia mostra vengono decisi.',
+      'Da due anni sviluppo su due prodotti dell’azienda per cui lavoro: un **PIM**, che raccoglie e organizza le informazioni sui prodotti per distribuirle ai canali di vendita, e un **CPQ**, che le usa per configurare, prezzare e preventivare. Da quattro mesi lavoro a un **server MCP** per il PIM.',
+      'Ho studiato Ingegneria informatica al Politecnico di Torino, poi ho iniziato la magistrale in Cybersecurity, che non ho concluso. Il resto l’ho imparato lavorando.',
     ],
     facts: [
-      { label: 'Base', value: 'Italia · remoto' },
-      { label: 'Ruolo', value: 'Fullstack Engineer' },
-      { label: 'Lato forte', value: 'Frontend architetturale' },
-      { label: 'Lingue', value: 'Italiano, Inglese' },
-      { label: 'Stato', value: 'Aperto a proposte', accent: true },
+      { label: 'Base', value: 'Torino, Italia' },
+      { label: 'Ruolo', value: 'Junior developer' },
+      { label: 'Lato forte', value: 'Frontend' },
+      { label: 'Lingue', value: 'Italiano, Inglese B2, Spagnolo A1' },
+      { label: 'Ora', value: 'Un server MCP per il PIM', accent: true },
     ],
   },
   skills: {
     mark: 'competenze',
     title: 'Per strato, non per percentuale',
-    lede: 'Le barre "React 90%" non dicono niente. Qui le tecnologie sono ordinate per strato del sistema, e i pallini indicano da quanto ci lavoro in produzione, non quanto mi piacciono.',
+    lede: 'Le barre "React 90%" non dicono niente. Qui le tecnologie sono ordinate per strato del sistema, e i pallini dicono quanto ci ho lavorato davvero: due anni in azienda e qualche progetto da autonomo. Nessun cinque su cinque.',
     layers: [
       {
         id: 'interface',
         title: 'Interfaccia',
         caption: 'strato 1',
         skills: [
-          { name: 'React · TypeScript', level: 5 },
-          { name: 'Design system', level: 5 },
-          { name: 'CSS architetturale', level: 4 },
-          { name: 'Accessibilità', level: 4 },
-          { name: 'Animazione web', level: 3 },
+          { name: 'React · TypeScript', level: 4 },
+          { name: 'Radix UI · MUI', level: 3 },
+          { name: 'CSS · Stitches', level: 3 },
+          { name: 'Figma', level: 2 },
         ],
-        foot: '138 componenti pubblicati su npm privato',
+        foot: 'Molti componenti su due prodotti aziendali',
       },
       {
         id: 'services',
         title: 'Servizi & dati',
         caption: 'strato 2',
         skills: [
-          { name: '.NET · C#', level: 4 },
-          { name: 'Node · Fastify', level: 4 },
-          { name: 'PostgreSQL · SQL Server', level: 4 },
-          { name: 'REST · GraphQL', level: 5 },
-          { name: 'Code di messaggi', level: 3 },
+          { name: 'C# · .NET', level: 3 },
+          { name: 'Node · NestJS', level: 2 },
+          { name: 'Server MCP', level: 2 },
+          { name: 'Stripe', level: 2 },
+          { name: 'Directus', level: 2 },
         ],
-        foot: 'Pipeline da 214k SKU, sincronizzazione in 3 m',
+        foot: 'Il backend dei due prodotti aziendali, in C# e .NET',
       },
       {
         id: 'delivery',
         title: 'Consegna',
         caption: 'strato 3',
         skills: [
-          { name: 'Docker', level: 4 },
-          { name: 'CI/CD · GitLab, Actions', level: 4 },
-          { name: 'Azure', level: 3 },
-          { name: 'Test end-to-end', level: 4 },
-          { name: 'Osservabilità', level: 3 },
+          { name: 'Git · conventional commit', level: 3 },
+          { name: 'Monorepo npm workspaces', level: 2 },
+          { name: 'Quality gate · SonarCloud', level: 2 },
         ],
-        foot: 'Zero regressioni visive su 4 release al mese',
+        foot: 'Tutte e tre su Basil, e verificabili nel repository',
       },
     ],
   },
   work: {
-    mark: 'progetti selezionati',
-    title: 'Quattro cose che sono andate in produzione',
-    lede: "Niente screenshot: ogni progetto è disegnato come lo schema che lo descrive. È l'unico modo perché anche il lavoro invisibile — una pipeline, un contratto API — abbia una faccia.",
+    mark: 'progetti',
+    title: 'Due prodotti aziendali, uno strumento nuovo, un progetto pubblico',
+    lede: 'Niente screenshot: ogni progetto è disegnato come lo schema che lo descrive. Dei prodotti aziendali il codice è privato e i dettagli restano generici; di Basil, invece, è pubblico tutto.',
     projects: [
       {
-        slug: 'design-system',
-        schema: 'design-system',
+        slug: 'coolpim',
+        schema: 'pipeline',
         // Ordine nell'SVG dall'alto verso il basso, sinistra verso destra:
-        // intestazioni delle tre colonne (PRIMITIVI, SEMANTICI, COMPONENTI),
-        // poi la didascalia dei temi, poi la nota finale sul pacchetto unico.
+        // i quattro nodi della fila, poi la didascalia sotto la riga di
+        // separazione. I quattro verbi sono quelli della definizione di PIM,
+        // non una descrizione dell'implementazione, che è privata.
         schemaLabels: [
-          'PRIMITIVI',
-          'SEMANTICI',
-          'COMPONENTI',
-          '7 TEMI GENERATI A BUILD TIME',
-          'un solo pacchetto · nessun fork per cliente',
+          'RACCOGLIE',
+          'ORGANIZZA',
+          'GESTISCE',
+          'CANALI',
+          'le informazioni di prodotto in un posto solo, poi verso i canali',
         ],
         schemaDescription:
-          'Token primitivi verso token semantici verso componenti, su sette temi',
+          'Il flusso di un PIM: dalla raccolta delle informazioni di prodotto ai canali di vendita',
         featured: true,
         kicker: 'In evidenza',
-        period: '2023 — oggi',
-        title: 'Design system multi-brand',
+        period: '2024 — oggi',
+        title: 'Coolpim',
         summary:
-          'Una sola libreria di componenti per sette brand con identità diverse. Token semantici in tre livelli, temi generati a build time, nessun fork per cliente.',
-        tags: ['React', 'TypeScript', 'Style Dictionary', 'Storybook', 'Chromatic'],
-        metrics: [
-          { value: '138', label: 'componenti' },
-          { value: '7', label: 'brand' },
-          { value: '0', label: 'fork' },
-        ],
+          'Il PIM dell’azienda: raccoglie e organizza le informazioni sui prodotti e le distribuisce a e-commerce, cataloghi e canali di vendita. Ci lavoro dal 2024, soprattutto sul frontend.',
+        tags: ['React', 'TypeScript', 'C#', '.NET'],
+        metrics: [],
         links: [
           { kind: 'caseStudy', label: 'Leggi il case study →' },
           { kind: 'private', label: 'Codice privato' },
         ],
         caseStudy: {
           intro:
-            "Sette brand, un'unica libreria di componenti: la sfida era rendere ogni identità riconoscibile senza duplicare una sola riga di codice. Il risultato sono 138 componenti pubblicati su npm privato e zero fork per cliente.",
+            'Coolpim è un PIM — Product Information Management — ed è un prodotto proprietario dell’azienda per cui lavoro. Ci sviluppo dal 2024: molti componenti sul frontend in React e TypeScript, e lavoro sul backend in C# e .NET.',
           sections: [
             {
-              heading: 'Il problema',
+              heading: 'Che cos’è un PIM',
               body: [
-                'Ogni brand aveva il proprio frontend, costruito da un team diverso in momenti diversi. Gli stessi componenti — bottoni, form, card — esistevano in sette varianti leggermente incompatibili, e ogni modifica al design richiedeva sette pull request separate.',
-                "Il team di prodotto voleva poter lanciare un ottavo brand in poche settimane, non in mesi. Con l'architettura esistente, ogni nuovo brand significava un nuovo fork da mantenere per sempre.",
+                'Un PIM è il sistema aziendale che raccoglie, organizza e gestisce le informazioni sui prodotti, per poi distribuirle ai canali che le usano: e-commerce, cataloghi, canali di vendita.',
               ],
             },
             {
-              heading: "Come l'ho risolto",
+              heading: 'Cosa ci faccio',
               body: [
-                'Ho definito tre livelli di token — primitivi, semantici, di componente — con Style Dictionary, così che ogni brand potesse ridefinire solo il livello semantico senza toccare i componenti. I temi vengono generati a build time, non a runtime.',
-                'Ho costruito la libreria di componenti in React e TypeScript con Storybook come ambiente di sviluppo isolato, e Chromatic per il visual regression testing su tutti e sette i temi ad ogni pull request.',
-              ],
-            },
-            {
-              heading: 'Cosa ne è uscito',
-              body: [
-                'Oggi la libreria conta 138 componenti pubblicati su un registro npm privato, consumati da sette brand senza un solo fork. Aggiungere un ottavo brand è una questione di token, non di codice.',
-                'Il tempo di lancio di un nuovo brand è sceso da mesi a circa tre settimane, e i bug di inconsistenza visiva fra brand sono praticamente scomparsi.',
+                'Lavoro soprattutto sul frontend, in React e TypeScript, dove ho implementato molti componenti del prodotto. Sul backend, in C# e .NET, contribuisco alla parte che quei componenti consumano.',
+                'Il codice è privato e i clienti non sono nominabili: quello che si può raccontare finisce qui.',
               ],
             },
           ],
         },
       },
       {
-        slug: 'pipeline',
-        schema: 'pipeline',
-        // Ordine nell'SVG dall'alto verso il basso, sinistra verso destra:
-        // l'annotazione degli scarti sopra il nodo di normalizzazione,
-        // la riga dei quattro nodi della pipeline, poi l'etichetta del sync completo.
-        // Indici 6-7 aggiunti in coda (fix round 1): i conteggi sotto la riga
-        // dei nodi, cablati prima con il separatore delle migliaia sbagliato
-        // in inglese. Aggiunti in fondo apposta per non spostare gli indici
-        // 0-5, già verificati in review.
-        schemaLabels: [
-          '−520 scarti',
-          'FEED CSV',
-          'NORMALIZZA',
-          'ARRICCHISCI',
-          'INDICIZZA',
-          'SYNC COMPLETO',
-          '214.000',
-          '213.480',
-        ],
-        schemaDescription: "Pipeline di ingestione: dai feed dei fornitori all'indice di ricerca",
+        slug: 'coolsales',
+        schema: 'configurator',
+        // Ordine nell'SVG dall'alto verso il basso, sinistra verso destra —
+        // **non** l'ordine del markup sorgente: il nodo in alto (y=12) è
+        // scritto dopo quello di sinistra (y=20), e l'etichetta del vincolo
+        // (y=80) precede nel disegno la didascalia in fondo (y=122):
+        //   0: nodo in alto, le opzioni
+        //   1: nodo di sinistra, il prodotto (in evidenza)
+        //   2: nodo di destra, il preventivo
+        //   3: etichetta del vincolo tratteggiato
+        //   4: didascalia in fondo, l'acronimo CPQ per esteso
+        schemaLabels: ['OPZIONI', 'PRODOTTO', 'PREVENTIVO', 'vincolo', 'CONFIGURE · PRICE · QUOTE'],
+        schemaDescription: 'Un CPQ: grafo di opzioni con vincoli, dal prodotto al preventivo',
         featured: false,
-        kicker: 'PIM',
-        period: '2021 — 2023',
-        title: 'Pipeline catalogo, 214k SKU',
+        kicker: 'CPQ',
+        period: '2024 — oggi',
+        title: 'Coolsales',
         summary:
-          'Ingestione da 40 fornitori con formati diversi, normalizzazione, arricchimento e indicizzazione. Da sei ore a tre minuti.',
-        tags: ['.NET', 'RabbitMQ', 'PostgreSQL', 'Elasticsearch'],
-        metrics: [
-          { value: '40', label: 'fornitori' },
-          { value: '214k', label: 'SKU processati' },
-          { value: '3 m 08 s', label: 'sync completo' },
+          'Il CPQ dell’azienda — configura, prezza, preventiva — integrato principalmente con il PIM e con Salesforce. Usato per clienti industriali.',
+        tags: ['React', 'TypeScript', 'C#', '.NET', 'Salesforce'],
+        metrics: [],
+        links: [
+          { kind: 'caseStudy', label: 'Case study →' },
+          { kind: 'private', label: 'Codice privato' },
         ],
-        links: [{ kind: 'caseStudy', label: 'Case study →' }],
         caseStudy: {
           intro:
-            'Quaranta fornitori, quaranta formati diversi, un solo catalogo da tenere aggiornato. La sincronizzazione completa è passata da sei ore a tre minuti.',
+            'Coolsales è un CPQ: uno strumento per configurare un prodotto, calcolarne il prezzo e produrre un preventivo. Si integra principalmente con il PIM aziendale e con Salesforce, ed è usato per clienti industriali.',
           sections: [
             {
-              heading: 'Il problema',
+              heading: 'Cosa ci faccio',
               body: [
-                "Il catalogo veniva aggiornato una volta al giorno con uno script monolitico che leggeva quaranta feed CSV in formati tutti diversi, uno alla volta, in sequenza. Un fornitore con un file malformato bloccava l'intera pipeline.",
-                "Non c'era modo di sapere quali prodotti fossero stati scartati o perché, finché qualcuno non se ne accorgeva a catalogo pubblicato, con articoli mancanti o prezzi vecchi in vetrina.",
+                'Come sul PIM: frontend in React e TypeScript, molti componenti, e lavoro backend in C# e .NET. È l’altro dei due prodotti su cui sviluppo dal 2024.',
               ],
             },
             {
-              heading: "Come l'ho risolto",
+              heading: 'Perché resta generico',
               body: [
-                'Ho riscritto la pipeline come una serie di fasi indipendenti su code di messaggi RabbitMQ: normalizzazione, arricchimento, indicizzazione. Ogni fase processa i prodotti in parallelo e pubblica gli scarti su una coda dedicata invece di bloccarsi.',
-                'PostgreSQL tiene lo stato canonico dei prodotti, Elasticsearch l\'indice di ricerca. Un fornitore rotto ora scarta solo le sue righe malformate — circa 520 su 214.000 — senza fermare gli altri 39.',
-              ],
-            },
-            {
-              heading: 'Cosa ne è uscito',
-              body: [
-                'La sincronizzazione completa dei 214k SKU è passata da sei ore a tre minuti e otto secondi, con scarti tracciati riga per riga invece che scoperti a posteriori.',
-                'Il catalogo può ora aggiornarsi più volte al giorno invece che una, e aggiungere un nuovo fornitore è questione di una mappatura di normalizzazione, non di una nuova pipeline.',
+                'Il codice è privato e i clienti non sono nominabili. Le architetture interne restano fuori: di un CPQ si può dire cosa fa, non com’è fatto dentro.',
               ],
             },
           ],
         },
       },
       {
-        slug: 'configurator',
-        schema: 'configurator',
-        // Ordine nell'SVG dall'alto verso il basso, sinistra verso destra:
-        // etichetta del nodo motore (più in alto), poi telaio e controllo sulla
-        // stessa riga, poi l'etichetta del vincolo incompatibile, poi il totale
-        // delle configurazioni valide in basso.
+        slug: 'mcp-server',
+        schema: 'mcp',
+        // Ordine nell'SVG per colonne, non riga per riga: le tre
+        // intestazioni (che stanno tutte sulla stessa riga in alto), poi le
+        // tre righe della colonna di sinistra, poi le tre della colonna di
+        // destra, infine la nota in fondo. Vedi il commento in cima a
+        // src/schemas/McpSchema.tsx, che consuma questi indici.
         schemaLabels: [
-          'MOTORE',
-          'TELAIO',
-          'CONTROLLO',
-          'incompatibile',
-          '4.812 CONFIGURAZIONI VALIDE',
+          'CHI LO USA',
+          'SERVER MCP',
+          'OGGETTI',
+          'sviluppatori',
+          'amministratori',
+          'clienti',
+          'prodotti',
+          'schemi di oggetto',
+          'catalogo',
+          'lo stesso server per chi sviluppa, chi amministra e i clienti',
         ],
         schemaDescription:
-          'Configuratore di prodotto: grafo di opzioni con vincoli di incompatibilità',
+          'Tre colonne: chi usa il server MCP, il server, gli oggetti del catalogo',
         featured: false,
-        kicker: 'Industriale',
-        period: '2020 — 2021',
-        title: 'Configuratore a vincoli',
+        kicker: 'MCP',
+        period: '2026',
+        title: 'Server MCP per il PIM',
         summary:
-          'Motore di regole che scarta in tempo reale le combinazioni impossibili fra 6 famiglie di opzioni, con preventivo immediato.',
-        tags: ['React', 'Node', 'Rules engine'],
-        metrics: [
-          { value: '6', label: 'famiglie di opzioni' },
-          { value: '4.812', label: 'configurazioni valide' },
-          { value: '<50 ms', label: 'tempo di validazione' },
-        ],
+          'Da quattro mesi sviluppo un server MCP per il PIM: espone strumenti per creare e modificare prodotti, schemi di oggetto e quanto serve a costruire un catalogo.',
+        tags: ['MCP', 'PIM'],
+        metrics: [],
         links: [
           { kind: 'caseStudy', label: 'Case study →' },
-          { kind: 'live', label: 'Demo live →', href: 'https://configurator.demo.example.dev' },
+          { kind: 'private', label: 'Codice privato' },
         ],
         caseStudy: {
           intro:
-            'Un motore di regole scarta in tempo reale le combinazioni impossibili fra sei famiglie di opzioni, invece di farle scoprire a ordine già piazzato. Il risultato sono 4.812 configurazioni valide riconosciute dal grafo dei vincoli, con un preventivo immediato invece che a fine configurazione.',
+            'Da quattro mesi lavoro allo sviluppo di un server MCP per il PIM aziendale. Espone come strumenti la creazione e la modifica di prodotti, di schemi di oggetto e di quanto serve alla costruzione di un catalogo.',
           sections: [
             {
-              heading: 'Il problema',
+              heading: 'A chi serve',
               body: [
-                'Il configuratore esistente lasciava scegliere qualsiasi combinazione di telaio, motore e controllo, e solo al momento dell\'ordine un operatore scopriva che la combinazione era incompatibile o non producibile.',
-                'Il preventivo arrivava via email il giorno dopo, spesso per scoprire che andava rifatto perché una delle opzioni scelte non era disponibile insieme alle altre.',
+                'Gli stessi strumenti servono a tre tipi di utente: chi sviluppa sul PIM, chi lo amministra e i clienti che ci costruiscono il catalogo.',
               ],
             },
             {
-              heading: "Come l'ho risolto",
+              heading: 'A che punto è',
               body: [
-                'Ho modellato le sei famiglie di opzioni e i loro vincoli di incompatibilità come un grafo, con un motore di regole in Node che valuta ogni scelta in tempo reale e disabilita le opzioni che diventerebbero incompatibili.',
-                'Il preventivo si aggiorna a ogni click, calcolato lato client sulle stesse regole validate lato server, cosicché un cliente non possa mai arrivare a un ordine non producibile.',
-              ],
-            },
-            {
-              heading: 'Cosa ne è uscito',
-              body: [
-                'Il grafo dei vincoli riconosce 4.812 configurazioni valide fra le famiglie di opzioni, e ogni combinazione scartata lo è in tempo reale, prima che il cliente completi la scelta.',
-                'Gli ordini con configurazione non producibile sono scesi a zero, e il tempo fra configurazione e preventivo è passato da un giorno a meno di un secondo.',
+                'È lavoro in corso, iniziato quattro mesi fa. Il codice è privato: non c’è altro da mostrare che la forma del percorso qui sopra.',
               ],
             },
           ],
         },
       },
       {
-        slug: 'headless',
-        schema: 'headless',
+        slug: 'basil',
+        schema: 'monorepo',
         // Ordine nell'SVG dall'alto verso il basso, sinistra verso destra:
-        // etichetta del monolite, poi etichetta dello switch headless, entrambe
-        // sulla stessa riga in alto al grafico.
-        schemaLabels: ['monolite', 'switch headless'],
-        schemaDescription: 'Latenza p95 prima e dopo la migrazione headless',
+        //   0: intestazione del riquadro del monorepo
+        //   1: pacchetto di sinistra, in evidenza (il mio lato)
+        //   2: pacchetto di destra
+        //   3: didascalia della barra del contributo
+        //   4: il valore, a sinistra sotto la barra
+        //   5: la posizione fra i contributori, a destra sotto la barra
+        // I due numeri sono quelli di github.com/cirulla/basil.
+        schemaLabels: [
+          'MONOREPO · NPM WORKSPACES',
+          'frontend',
+          'backend',
+          'IL MIO CONTRIBUTO',
+          '131 commit su 779',
+          'secondo contributore su sette',
+        ],
+        schemaDescription:
+          'Monorepo con frontend e backend separati, e la quota dei miei commit sul totale',
         featured: false,
-        kicker: 'Storefront',
-        period: '2019 — 2020',
-        title: 'Migrazione headless',
+        kicker: 'Open source',
+        period: '2021',
+        title: 'Basil',
         summary:
-          'Uscita da un monolite senza fermare le vendite: rollout per rotta, doppio traffico, rollback in un minuto.',
-        tags: ['Next.js', 'GraphQL', 'CDN edge'],
+          'Web app per gruppi di acquisto solidale, progetto del corso di Software Engineering II al Politecnico di Torino. Team di sette persone, repository pubblico: sono il secondo contributore con 131 commit su 779.',
+        tags: ['React', 'TypeScript', 'MUI', 'NestJS', 'npm workspaces'],
         metrics: [
-          { value: '−78%', label: 'p95 TTFB' },
-          { value: '1 min', label: 'rollback' },
-          { value: '0', label: 'downtime durante il rollout' },
+          { value: '131', label: 'commit miei' },
+          { value: '779', label: 'commit in tutto' },
+          { value: '7', label: 'persone nel team' },
         ],
         links: [
           { kind: 'caseStudy', label: 'Case study →' },
-          { kind: 'repo', label: 'GitHub →', href: 'https://github.com/utente/headless-storefront' },
+          { kind: 'repo', label: 'GitHub →', href: 'https://github.com/cirulla/basil' },
         ],
         caseStudy: {
           intro:
-            'Un monolite che serviva insieme catalogo e checkout viene lasciato una rotta alla volta, con traffico specchiato e un interruttore di rollback pronto in un minuto. Il risultato è un p95 time-to-first-byte sceso del 78%, senza un solo minuto di downtime misurabile durante tutta la migrazione.',
+            'Basil è una web app per gruppi di acquisto solidale, sviluppata nel 2021 per il corso di Software Engineering II al Politecnico di Torino da un team di sette persone. Il repository è pubblico: è l’unico progetto di cui tutto quello che segue si verifica in un minuto.',
           sections: [
             {
-              heading: 'Il problema',
+              heading: 'Il mio contributo',
               body: [
-                'Lo storefront viveva in un monolite server-rendered che serviva sia il catalogo che il checkout dalla stessa applicazione. Ogni deploy era un tutto-o-niente su tutto il traffico, con un p95 time-to-first-byte vicino ai 900 ms.',
-                'Non era possibile migrare a un\'architettura headless senza rischiare ore di downtime durante il periodo di picco vendite, cosa che il business non poteva accettare.',
+                'Sono il secondo contributore del repository, con 131 commit sui 779 totali, e ho lavorato principalmente sul frontend: React, TypeScript e MUI.',
               ],
             },
             {
-              heading: "Come l'ho risolto",
+              heading: 'Com’era tenuto insieme',
               body: [
-                'Ho migrato una rotta alla volta verso un frontend Next.js su CDN edge, con GraphQL come contratto verso il backend esistente, mantenendo il monolite attivo in parallelo come fallback.',
-                'Il traffico veniva specchiato sulla nuova rotta prima di essere instradato davvero, per validare i tempi di risposta sotto carico reale, con un interruttore per tornare al monolite in meno di un minuto.',
-              ],
-            },
-            {
-              heading: 'Cosa ne è uscito',
-              body: [
-                "Il p95 time-to-first-byte è sceso del 78%, e l'intera migrazione è avvenuta senza un solo minuto di downtime misurabile sulle vendite.",
-                'Il rollback, quando serviva durante il rollout, richiedeva meno di un minuto invece di un deploy di emergenza, il che ha reso l\'intera migrazione a basso rischio.',
+                'Un monorepo npm workspaces con frontend e backend separati — React da una parte, NestJS dall’altra — un quality gate SonarCloud, i conventional commit imposti da un git hook e licenza MIT.',
               ],
             },
           ],
@@ -368,42 +329,60 @@ export const itContent = {
   },
   path: {
     mark: 'percorso',
-    title: 'Undici anni, tre contesti',
+    title: 'Studi, progetti, azienda',
     entries: [
       {
-        period: '2021 — oggi',
+        period: '2024 — oggi',
         current: true,
-        role: 'Fullstack Engineer',
-        org: 'E-commerce B2B/B2C',
-        body: 'Responsabile del design system e delle API di catalogo. Ho portato sette brand su una sola libreria di componenti e riscritto la pipeline di ingestione prodotti.',
-        tags: ['React', '.NET', 'PostgreSQL', 'Azure'],
+        role: 'Junior developer',
+        org: 'Coolshop',
+        body: 'Sviluppo su due prodotti dell’azienda, un PIM e un CPQ: frontend in React e TypeScript, backend in C# e .NET. Da quattro mesi, un server MCP per il PIM.',
+        tags: ['React', 'TypeScript', 'C#', '.NET'],
       },
       {
-        period: '2018 — 2021',
+        period: '2022 — oggi',
         current: false,
-        role: 'Frontend Developer',
-        org: 'Software house',
-        body: 'Applicazioni su misura per manifattura e retail: configuratori di prodotto, portali fornitori, dashboard operative. Primo contatto serio con il backend, per necessità.',
-        tags: ['Angular', 'React', 'Node'],
+        role: 'Sviluppatore, da autonomo',
+        org: 'Trader Without Money',
+        body: 'Applicazione per attività di trading. Sviluppo principalmente frontend, con contributi backend. Progetto in sviluppo e temporaneamente sospeso.',
+        tags: ['React', 'TypeScript', 'Stitches', 'Radix UI', 'NestJS', 'Stripe'],
       },
       {
-        period: '2015 — 2018',
+        period: '2021',
         current: false,
-        role: 'Web Developer',
-        org: 'Agenzia',
-        body: 'Siti e landing per clienti di ogni dimensione. Dove ho imparato a consegnare, a misurare le performance e a discutere con chi il codice non lo legge.',
-        tags: ['JavaScript', 'PHP', 'SCSS'],
+        role: 'Sviluppatore frontend, da autonomo',
+        org: 'LVerify',
+        body: 'Applicazione web per la gestione documentale di ristrutturazioni di abitazioni ed edifici. Ho sviluppato il frontend.',
+        tags: ['React', 'TypeScript', 'MUI', 'Figma', 'Directus'],
+      },
+      {
+        period: '2016 — 2020',
+        current: false,
+        role: 'Laurea in Ingegneria Informatica',
+        org: 'Politecnico di Torino',
+        body: 'Dal 2020 la magistrale in Cybersecurity, nello stesso ateneo: interrotta, non conclusa.',
+        tags: ['Ingegneria informatica', 'Cybersecurity'],
       },
     ],
   },
   contact: {
     mark: 'contatti',
-    title: 'Se hai un sistema complicato, {parliamone}.',
-    note: 'Rispondo entro un paio di giorni. Se scrivi con un contesto concreto — cosa state costruendo, cosa vi blocca — rispondo prima.',
+    title: 'Se ti va, {scrivimi}.',
+    note: 'Non sto cercando lavoro. Se vuoi parlare di PIM, di frontend o di qualcosa che hai letto qui, la casella è aperta.',
     links: [
-      { label: 'Email', value: 'ciao@esempio.dev', href: 'mailto:ciao@esempio.dev', arrow: '→' },
-      { label: 'GitHub', value: 'github.com/utente', href: 'https://github.com/utente', arrow: '→' },
-      { label: 'LinkedIn', value: 'in/utente', href: 'https://linkedin.com/in/utente', arrow: '→' },
+      {
+        label: 'Email',
+        value: 'francescorabezzano@gmail.com',
+        href: 'mailto:francescorabezzano@gmail.com',
+        arrow: '→',
+      },
+      { label: 'GitHub', value: 'github.com/rab97', href: 'https://github.com/rab97', arrow: '→' },
+      {
+        label: 'LinkedIn',
+        value: 'in/francesco-rabezzano',
+        href: 'https://linkedin.com/in/francesco-rabezzano/',
+        arrow: '→',
+      },
     ],
   },
   footer: {

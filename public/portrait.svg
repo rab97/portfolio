@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" width="480" height="600" role="img" aria-hidden="true">
+  <!--
+    Placeholder del ritratto, in attesa della foto vera (vedi
+    src/components/Portrait.tsx). Un'immagine SVG caricata da <img src>
+    vive in un documento isolato: non vede le custom properties di
+    src/theme/tokens.css definite sulla pagina che la include. Per poter
+    comunque scrivere i colori come `var(--token)` sotto — invece di
+    numeri inventati qui — questi pochi token vengono rispecchiati una
+    sola volta nel :root di questo file, con gli stessi valori del tema
+    scuro (il default di tokens.css). Se la palette cambia, aggiornare
+    anche qui.
+  -->
+  <style>
+    :root {
+      --panel: #141a21;
+      --line-2: #2e3a45;
+      --faint: #4e5c6b;
+      --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+  </style>
+
+  <rect width="480" height="600" fill="var(--panel)" />
+
+  <g stroke="var(--line-2)" stroke-width="1">
+    <line x1="80" y1="0" x2="80" y2="600" />
+    <line x1="160" y1="0" x2="160" y2="600" />
+    <line x1="240" y1="0" x2="240" y2="600" />
+    <line x1="320" y1="0" x2="320" y2="600" />
+    <line x1="400" y1="0" x2="400" y2="600" />
+    <line x1="0" y1="80" x2="480" y2="80" />
+    <line x1="0" y1="160" x2="480" y2="160" />
+    <line x1="0" y1="240" x2="480" y2="240" />
+    <line x1="0" y1="320" x2="480" y2="320" />
+    <line x1="0" y1="400" x2="480" y2="400" />
+    <line x1="0" y1="480" x2="480" y2="480" />
+    <line x1="0" y1="520" x2="480" y2="520" />
+  </g>
+
+  <text
+    x="240"
+    y="300"
+    fill="var(--faint)"
+    font-family="var(--mono)"
+    font-size="64"
+    font-weight="600"
+    letter-spacing="2"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >FR</text>
+</svg>

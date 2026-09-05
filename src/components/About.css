@@ -1,0 +1,86 @@
+/* ============================================================
+   Chi sono — copiato dal mockup approvato
+   (docs/superpowers/specs/2026-09-04-portfolio-mockup.html).
+   Il mockup non prevedeva ancora un ritratto (era un punto aperto delle
+   note finali): `.about-aside` e `.about-portrait` sono un'aggiunta di
+   questo task, non del mockup, per dargli posto sopra i fatti senza
+   toccare la griglia a due colonne già approvata.
+   ============================================================ */
+
+.about {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 42px;
+  align-items: start;
+}
+@media (max-width: 800px) {
+  .about {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+.about p {
+  margin: 0 0 15px;
+  max-width: 62ch;
+}
+.about p:last-of-type {
+  margin-bottom: 0;
+}
+.about strong {
+  color: var(--bright);
+  font-weight: 600;
+}
+
+.about-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.about-portrait {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--panel);
+  line-height: 0;
+}
+.about-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.facts {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  overflow: hidden;
+}
+.facts div {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 12px;
+  padding: 11px 15px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.facts div:first-child {
+  border-top: 0;
+}
+.facts dt {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding-top: 3px;
+}
+.facts dd {
+  margin: 0;
+  color: var(--text);
+}
+.facts dd em {
+  font-style: normal;
+  color: var(--teal);
+}

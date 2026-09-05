@@ -17,7 +17,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Strictness — come gli altri due progetti del repository. Era rimasta
+       fuori quando qui dentro c'era solo configurazione dichiarativa; da
+       quando c'è anche la logica di build (build/), cioè il codice che
+       decide se la build si ferma quando deve, non è più un rischio
+       confinato. */
+    "strict": true
   },
   "include": ["vite.config.ts", "build"]
 }

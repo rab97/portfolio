@@ -214,10 +214,22 @@
   background: var(--teal);
   animation: flow 2.6s linear infinite;
 }
-.flowline .wire:nth-of-type(2)::after {
+/* Il flusso parte sfalsato: primo collegamento subito, secondo dopo 0.65s,
+   terzo dopo 1.3s — il diagramma si compone da sinistra a destra, come
+   promette la direzione visiva.
+
+   I selettori contano i soli collegamenti, non la posizione fra i figli.
+   Tutti i figli di `.flowline` sono `<span>` (nodi e collegamenti insieme),
+   quindi `:nth-of-type` li conta tutti: `nth-of-type(2)` colpiva il *primo*
+   collegamento e `nth-of-type(3)` un nodo, cioè nulla — due collegamenti su
+   tre partivano insieme. Con il combinatore fratello la conta è sui soli
+   `.wire`, e resta giusta anche se il numero di nodi cambia (arrivano dai
+   contenuti): un eventuale quarto collegamento erediterebbe il ritardo del
+   terzo invece di tornare in sincrono col primo. */
+.flowline .wire ~ .wire::after {
   animation-delay: 0.65s;
 }
-.flowline .wire:nth-of-type(3)::after {
+.flowline .wire ~ .wire ~ .wire::after {
   animation-delay: 1.3s;
 }
 @keyframes flow {

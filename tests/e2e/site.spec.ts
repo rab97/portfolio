@@ -102,6 +102,22 @@ test('la CTA dell’hero porta alla sezione progetti', async ({ page }) => {
   expect(workBox.y).toBeLessThan(200)
 })
 
+/** I tre collegamenti del diagramma dell'hero devono animare sfalsati: è il
+ *  punto in cui la direzione visiva promette un diagramma che si compone da
+ *  sinistra a destra. Il ritardo vive in uno pseudo-elemento, quindi si legge
+ *  solo dallo stile calcolato di `::after` su un browser vero — jsdom non
+ *  calcola pseudo-elementi, e una regola che non colpisce niente resta muta
+ *  in ogni altro test. */
+test('i collegamenti del diagramma partono sfalsati, non in sincrono', async ({ page }) => {
+  await page.goto('/it/')
+
+  const delays = await page.$$eval('.flowline .wire', (wires) =>
+    wires.map((wire) => getComputedStyle(wire, '::after').animationDelay),
+  )
+
+  expect(delays).toEqual(['0s', '0.65s', '1.3s'])
+})
+
 test('la scelta del tema sopravvive a un ricaricamento', async ({ page }) => {
   await page.goto('/it/')
 

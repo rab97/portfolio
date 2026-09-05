@@ -4,13 +4,14 @@ import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
+import { Skills } from '@/components/Skills'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { workPath } from '@/i18n/routes'
 
-/** Guscio della home. Le sezioni ancora mancanti (Skills, Work, Path,
- *  Contact) arrivano nei task successivi: qui c'è l'hero e il "chi sono"
- *  più il minimo che rende la pagina pre-renderizzabile e i case study
- *  raggiungibili da un crawler. */
+/** Guscio della home. Le sezioni ancora mancanti (Work, Path, Contact)
+ *  arrivano nei task successivi: qui c'è l'hero, il "chi sono" e le
+ *  competenze, più il minimo che rende la pagina pre-renderizzabile e i
+ *  case study raggiungibili da un crawler. */
 export default function Home() {
   const { locale, copy } = useLocale()
 
@@ -21,6 +22,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <Skills />
         <nav aria-label={copy.work.title}>
           <ul>
             {copy.work.projects.map((project) => (

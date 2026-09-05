@@ -15,7 +15,15 @@ import './Contact.css'
  *  link) è già nel testo — quindi è marcata `aria-hidden`. I link verso
  *  domini esterni si aprono in una scheda nuova con `rel="noopener
  *  noreferrer"`: `noopener` evita che la pagina aperta possa manipolare
- *  `window.opener`, `noreferrer` in più sopprime l'header Referer. */
+ *  `window.opener`, `noreferrer` in più sopprime l'header Referer.
+ *
+ *  Ogni ancora porta anche un `aria-label` esplicito, etichetta e valore
+ *  separati da uno spazio: senza, il nome accessibile calcolato dal
+ *  contenuto (`<i>` ed `<span>` adiacenti, senza spazio fra loro nel
+ *  markup) concatenerebbe le due parole senza separatore per chi ascolta
+ *  ("Emailciao@esempio.dev"), anche se la griglia CSS le separa
+ *  visivamente. Non aggiunge testo visibile: la freccia resta l'unico
+ *  figlio marcato `aria-hidden`. */
 export function Contact() {
   const { copy } = useLocale()
   const { contact } = copy
@@ -40,6 +48,7 @@ export function Contact() {
                 <a
                   key={link.label}
                   href={link.href}
+                  aria-label={`${link.label} ${link.value}`}
                   {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   <i>{link.label}</i>

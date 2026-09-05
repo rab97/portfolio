@@ -59,23 +59,6 @@ interface PageHeadProps {
   noindex?: boolean
 }
 
-/** TEMPORANEO — TOGLIERE QUANDO I CONTENUTI SARANNO VERI.
- *
- *  Tutti i testi del sito sono ancora segnaposto inventati (l'elenco esatto è
- *  in testa a `src/content/it.ts`): anni di esperienza, aziende, numeri di
- *  produzione e contatti non corrispondono a nessuna persona reale. Finché è
- *  così il sito non deve finire negli indici dei motori di ricerca, perché
- *  un portfolio pubblico che attribuisce al proprietario cose che non ha
- *  fatto è peggio di un portfolio assente — e una volta indicizzato resta in
- *  giro molto dopo la correzione.
- *
- *  A differenza del `noindex` delle 404, questo NON rimuove `canonical` e gli
- *  `hreflang`: quelle dichiarazioni restano corrette, è solo l'indicizzazione
- *  a essere sospesa.
- *
- *  Per rimuoverlo: cancella questa costante e il suo uso qui sotto. */
-export const PLACEHOLDER_CONTENT = true
-
 export function PageHead({ title, description, noindex = false }: PageHeadProps) {
   const { locale, copy } = useLocale()
   const { pathname } = useLocation()
@@ -87,7 +70,7 @@ export function PageHead({ title, description, noindex = false }: PageHeadProps)
     <Head htmlAttributes={{ lang: locale }}>
       <title>{title}</title>
       <meta name="description" content={description} />
-      {(noindex || PLACEHOLDER_CONTENT) && <meta name="robots" content="noindex, follow" />}
+      {noindex && <meta name="robots" content="noindex, follow" />}
       {!noindex && <link rel="canonical" href={url} />}
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={copy.meta.title} />

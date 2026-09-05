@@ -1,5 +1,7 @@
 import { Link } from 'react-router'
 import { PageHead } from '@/components/Head'
+import { Nav } from '@/components/Nav'
+import { Footer } from '@/components/Footer'
 import { Rich } from '@/components/Rich'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { workPath } from '@/i18n/routes'
@@ -13,6 +15,7 @@ export default function Home() {
   return (
     <>
       <PageHead title={copy.meta.title} description={copy.meta.description} />
+      <Nav />
       <main>
         <p>
           <Rich text={copy.hero.headline} />
@@ -30,6 +33,7 @@ export default function Home() {
           </ul>
         </nav>
       </main>
+      <Footer />
     </>
   )
 }

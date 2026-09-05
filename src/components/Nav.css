@@ -1,0 +1,116 @@
+/* ============================================================
+   Nav e footer del sito — copiati dal mockup approvato
+   (docs/superpowers/specs/2026-09-04-portfolio-mockup.html).
+   Gli stili .seg, .seg button e .seg svg dei due toggle sono già
+   in src/theme/base.css: non ridefinirli qui.
+   ============================================================ */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-in {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 11px var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+.nav-logo {
+  color: var(--bright);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.nav-logo em {
+  color: var(--amber);
+  font-style: normal;
+}
+
+.nav-links {
+  display: flex;
+  gap: 17px;
+  margin-left: auto;
+  color: var(--dim);
+}
+.nav-links a {
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: var(--bright);
+}
+.nav-links a::before {
+  content: '/ ';
+  color: var(--faint);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--teal);
+  border: 1px solid color-mix(in srgb, var(--teal) 36%, transparent);
+  border-radius: 999px;
+  padding: 3px 10px 3px 8px;
+}
+.status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal) 50%, transparent);
+  }
+  60%,
+  100% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+.nav-links + .controls {
+  margin-left: 0;
+}
+
+@media (max-width: 860px) {
+  .nav-links {
+    display: none;
+  }
+  .controls {
+    margin-left: auto;
+  }
+}
+@media (max-width: 520px) {
+  .status {
+    display: none;
+  }
+}
+
+/* ---------- footer del sito ---------- */
+footer.site {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+}

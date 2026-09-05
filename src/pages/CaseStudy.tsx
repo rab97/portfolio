@@ -1,5 +1,7 @@
 import { Link, useParams } from 'react-router'
 import { PageHead } from '@/components/Head'
+import { Nav } from '@/components/Nav'
+import { Footer } from '@/components/Footer'
 import { Rich } from '@/components/Rich'
 import { useLocale } from '@/i18n/LocaleProvider'
 import { homePath } from '@/i18n/routes'
@@ -17,6 +19,7 @@ export default function CaseStudy() {
   return (
     <>
       <PageHead title={project.title} description={project.summary} />
+      <Nav />
       <main>
         <p>{project.kicker}</p>
         <h1>{project.title}</h1>
@@ -43,6 +46,7 @@ export default function CaseStudy() {
         ))}
         <Link to={homePath(locale)}>{copy.caseStudy.back}</Link>
       </main>
+      <Footer />
     </>
   )
 }

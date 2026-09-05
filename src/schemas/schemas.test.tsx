@@ -1,0 +1,27 @@
+import { render } from '@testing-library/react'
+import { SCHEMAS } from './index'
+import { itContent } from '@/content/it'
+
+test('esiste uno schema per ogni identificatore usato dai progetti', () => {
+  for (const project of itContent.work.projects) {
+    expect(SCHEMAS[project.schema]).toBeDefined()
+  }
+})
+
+test.each(Object.entries(SCHEMAS))('%s: nessun colore esadecimale nell SVG', (_id, Schema) => {
+  const { container } = render(<Schema label="test" labels={Array(12).fill('x')} />)
+  // I sei campioni di colore di marchi nello schema design-system sono l'unica
+  // eccezione ammessa: sono marcati con data-swatch="true" e vanno rimossi dal
+  // markup prima di cercare esadecimali, altrimenti l'eccezione diventerebbe un
+  // buco silenzioso nel test invece di un'eccezione visibile e verificata.
+  const clone = container.cloneNode(true) as HTMLElement
+  clone.querySelectorAll('[data-swatch="true"]').forEach((el) => el.remove())
+  expect(clone.innerHTML).not.toMatch(/#[0-9a-fA-F]{3,8}\b/)
+})
+
+test.each(Object.entries(SCHEMAS))('%s: è etichettato per gli screen reader', (_id, Schema) => {
+  const { container } = render(<Schema label="descrizione" labels={Array(12).fill('x')} />)
+  const svg = container.querySelector('svg')
+  expect(svg).toHaveAttribute('role', 'img')
+  expect(svg).toHaveAttribute('aria-label', 'descrizione')
+})

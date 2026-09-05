@@ -1,19 +1,18 @@
-import { Link } from 'react-router'
 import { PageHead } from '@/components/Head'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
 import { Skills } from '@/components/Skills'
+import { Work } from '@/components/Work'
 import { useLocale } from '@/i18n/LocaleProvider'
-import { workPath } from '@/i18n/routes'
 
-/** Guscio della home. Le sezioni ancora mancanti (Work, Path, Contact)
- *  arrivano nei task successivi: qui c'è l'hero, il "chi sono" e le
- *  competenze, più il minimo che rende la pagina pre-renderizzabile e i
- *  case study raggiungibili da un crawler. */
+/** Guscio della home. Le sezioni ancora mancanti (Path, Contact) arrivano
+ *  nei task successivi: qui c'è l'hero, il "chi sono", le competenze e i
+ *  progetti — i case study restano raggiungibili da un crawler perché
+ *  ogni `ProjectCard` linka il proprio al titolo. */
 export default function Home() {
-  const { locale, copy } = useLocale()
+  const { copy } = useLocale()
 
   return (
     <>
@@ -23,15 +22,7 @@ export default function Home() {
         <Hero />
         <About />
         <Skills />
-        <nav aria-label={copy.work.title}>
-          <ul>
-            {copy.work.projects.map((project) => (
-              <li key={project.slug}>
-                <Link to={workPath(locale, project.slug)}>{project.title}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <Work />
       </main>
       <Footer />
     </>

@@ -1,0 +1,167 @@
+/* ============================================================
+   Progetti — copiato dal mockup approvato
+   (docs/superpowers/specs/2026-09-04-portfolio-mockup.html).
+   ============================================================ */
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.card {
+  display: grid;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  overflow: hidden;
+  transition:
+    border-color 0.3s,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card:hover {
+  border-color: var(--line-2);
+  transform: translateY(-3px);
+}
+.card-featured {
+  grid-template-columns: 1.05fr 1fr;
+}
+@media (max-width: 820px) {
+  .card-featured {
+    grid-template-columns: 1fr;
+  }
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.card-body {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.card-kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.card-kicker b {
+  color: var(--amber);
+  font-weight: 500;
+}
+.card-body h3 {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--bright);
+  margin: 0;
+  line-height: 1.25;
+}
+.card-body h3 a {
+  color: inherit;
+}
+.card-body > p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--dim);
+  max-width: 46ch;
+}
+
+.card-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  border-top: 1px dashed var(--line-2);
+  padding-top: 13px;
+}
+.card-stats div {
+  display: flex;
+  flex-direction: column;
+}
+.card-stats b {
+  font-family: var(--mono);
+  font-size: 16px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+.card-stats span {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.card-links {
+  display: flex;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+.card-links a {
+  color: var(--text);
+  border-bottom: 1px solid var(--line-2);
+  padding-bottom: 2px;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.card-links a:hover {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+.card-link-disabled {
+  color: var(--faint);
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  cursor: not-allowed;
+}
+
+.schema {
+  position: relative;
+  background: var(--schema-bg);
+  border-left: 1px solid var(--line);
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  overflow: hidden;
+}
+.card-grid .schema {
+  border-left: 0;
+  border-bottom: 1px solid var(--line);
+  min-height: 150px;
+}
+.schema::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 30%, var(--sheen) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card:hover .schema::after {
+  transform: translateX(100%);
+}
+.schema svg {
+  width: 100%;
+  height: auto;
+  max-width: 320px;
+  display: block;
+}
+.schema text {
+  font-family: var(--mono);
+}
